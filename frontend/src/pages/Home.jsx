@@ -1,5 +1,11 @@
+import AnimatedText from '../components/AnimatedText.jsx'
+
 function Home() {
-  return <h1>hello</h1>
+  return (
+    <main className="home">
+      <AnimatedText text="hello radix team" />
+    </main>
+  )
 }
 
 export default Home
