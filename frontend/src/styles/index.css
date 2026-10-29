@@ -21,9 +21,4 @@ body {
   margin: 0;
   font-size: clamp(2rem, 8vw, 5rem);
   text-align: center;
-  perspective: 600px;
-}
-
-.animated-text .char {
-  display: inline-block;
 }
