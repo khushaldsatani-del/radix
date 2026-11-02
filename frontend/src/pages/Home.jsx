@@ -2,7 +2,9 @@ import { useRef } from 'react'
 import { gsap, useGSAP } from '../lib/gsap.js'
 import Navbar from '../components/Navbar/Navbar.jsx'
 import Hero from '../components/Hero/Hero.jsx'
-import FeatureStrip from '../components/FeatureStrip/FeatureStrip.jsx'
+import About from '../components/About/About.jsx'
+import Team from '../components/Team/Team.jsx'
+import Footer from '../components/Footer/Footer.jsx'
 
 function Home() {
   const pageRef = useRef(null)
@@ -10,7 +12,8 @@ function Home() {
   useGSAP(
     () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-      gsap.from('.navbar > *, [data-reveal]', {
+      // The phone menu is left out: it starts hidden and controls its own visibility.
+      gsap.from('.navbar > :not(.navbar__menu), [data-reveal]', {
         y: 20,
         opacity: 0,
         duration: 0.6,
@@ -22,14 +25,19 @@ function Home() {
     { scope: pageRef },
   )
 
+  // About sits outside the hero wrapper, which gets pinned while scrolling.
   return (
-    <main className="page" ref={pageRef} data-pin-scope>
-      <div className="page__card">
+    <>
+      {/* Anchor for "#top" links; the hero itself moves while pinned, so it can't be the target. */}
+      <span id="top" aria-hidden="true" />
+      <main className="page" ref={pageRef} data-pin-scope data-liquid="hero">
         <Navbar />
         <Hero />
-        <FeatureStrip />
-      </div>
-    </main>
+      </main>
+      <About />
+      <Team />
+      <Footer />
+    </>
   )
 }
 

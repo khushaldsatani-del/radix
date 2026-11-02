@@ -4,9 +4,11 @@ import { U, COLS, ROWS, MAX_DELAY, grayCells, limeCells, lavenderCells } from '.
 
 const WIDTH = COLS * U
 const HEIGHT = ROWS * U
-const RADIUS = U * 3.5
+const RADIUS = U * 5
 const LAYERS = { gray: grayCells, lime: limeCells, lavender: lavenderCells }
-const PULL = { gray: 0.12, lime: 0.38, lavender: 0.38 }
+const PULL = { gray: 0.2, lime: 0.45, lavender: 0.45 }
+const STIFFNESS = 0.06
+const DAMPING = 0.84
 
 function CellLayer({ layer, color, children }) {
   return (
@@ -31,7 +33,6 @@ function LiquidGrid() {
   const wrapRef = useRef(null)
   const svgRef = useRef(null)
   const linesRef = useRef(null)
-  const blobRef = useRef(null)
 
   useGSAP(
     (context, contextSafe) => {
@@ -39,7 +40,8 @@ function LiquidGrid() {
 
       const svg = svgRef.current
       const wrap = wrapRef.current
-      const blob = blobRef.current
+      // Looked up from the DOM because a parent's ref isn't attached yet when this effect runs.
+      const scope = wrap.closest('[data-pin-scope]') || wrap
       const ease = gsap.parseEase('power2.inOut')
       const clamp = gsap.utils.clamp(0, 1)
 
@@ -53,18 +55,26 @@ function LiquidGrid() {
           hy: 0,
           ox: 0,
           oy: 0,
+          vx: 0,
+          vy: 0,
           s: 0,
+          vs: 0,
           intro: 0,
           phase: Math.random() * Math.PI * 2,
         }
       })
 
-      const mouse = { x: WIDTH / 2, y: HEIGHT / 2, active: false }
-      const cursor = { x: WIDTH / 2, y: HEIGHT / 2, r: 0 }
+      const mouse = { x: WIDTH / 2, y: HEIGHT / 2, px: WIDTH / 2, py: HEIGHT / 2, vx: 0, vy: 0, active: false }
       const morph = { p: 0 }
       let visible = true
 
-      const render = (time = 0) => {
+      // One physics step at 60fps; the ticker runs extra steps when frames are slow.
+      const simulate = () => {
+        mouse.vx += (mouse.x - mouse.px - mouse.vx) * 0.25
+        mouse.vy += (mouse.y - mouse.py - mouse.vy) * 0.25
+        mouse.px = mouse.x
+        mouse.py = mouse.y
+
         for (const c of cells) {
           const lp = ease(clamp((morph.p - c.delay) / (1 - MAX_DELAY)))
           c.hx = c.ax + (c.bx - c.ax) * lp + U / 2
@@ -78,38 +88,47 @@ function LiquidGrid() {
             const dy = mouse.y - c.hy
             const d = Math.hypot(dx, dy)
             if (d < RADIUS) {
-              const f = (1 - d / RADIUS) ** 2
-              tx = dx * f * c.pull
-              ty = dy * f * c.pull
-              ts = f * 0.3
+              const t = 1 - d / RADIUS
+              const f = t * t * (3 - 2 * t)
+              tx = (dx * c.pull + mouse.vx * 2.5) * f
+              ty = (dy * c.pull + mouse.vy * 2.5) * f
+              ts = f * 0.35
             }
           }
-          c.ox += (tx - c.ox) * 0.1
-          c.oy += (ty - c.oy) * 0.1
-          c.s += (ts - c.s) * 0.1
 
-          const x = c.hx + c.ox + Math.sin(time * 1.4 + c.phase) * 2
-          const y = c.hy + c.oy + Math.cos(time * 1.1 + c.phase) * 2
-          const scale = c.intro * (1 + c.s)
-          c.el.setAttribute('transform', `translate(${x} ${y}) scale(${scale}) translate(${-U / 2} ${-U / 2})`)
+          c.vx = (c.vx + (tx - c.ox) * STIFFNESS) * DAMPING
+          c.vy = (c.vy + (ty - c.oy) * STIFFNESS) * DAMPING
+          c.vs = (c.vs + (ts - c.s) * STIFFNESS) * DAMPING
+          c.ox += c.vx
+          c.oy += c.vy
+          c.s += c.vs
         }
-
-        cursor.x += (mouse.x - cursor.x) * 0.18
-        cursor.y += (mouse.y - cursor.y) * 0.18
-        cursor.r += ((mouse.active ? U * 0.55 : 0) - cursor.r) * 0.12
-        blob.setAttribute('cx', cursor.x)
-        blob.setAttribute('cy', cursor.y)
-        blob.setAttribute('r', Math.max(0, cursor.r))
       }
 
-      const tick = (time) => visible && render(time)
-      render()
+      const draw = (time = 0) => {
+        for (const c of cells) {
+          const x = c.hx + c.ox + Math.sin(time * 1.2 + c.phase) * 1.5
+          const y = c.hy + c.oy + Math.cos(time * 0.9 + c.phase) * 1.5
+          const scale = Math.max(0, c.intro * (1 + c.s))
+          c.el.setAttribute('transform', `translate(${x} ${y}) scale(${scale}) translate(${-U / 2} ${-U / 2})`)
+        }
+      }
+
+      const tick = (time) => {
+        if (!visible) return
+        const steps = Math.min(4, Math.max(1, Math.round(gsap.ticker.deltaRatio(60))))
+        for (let i = 0; i < steps; i++) simulate()
+        draw(time)
+      }
+
+      simulate()
+      draw()
       gsap.ticker.add(tick)
 
       gsap.to(cells, {
         intro: 1,
-        duration: 1,
-        ease: 'elastic.out(1, 0.6)',
+        duration: 1.1,
+        ease: 'elastic.out(1, 0.55)',
         stagger: { each: 0.012, from: 'random' },
         delay: 0.3,
       })
@@ -123,12 +142,12 @@ function LiquidGrid() {
 
       const onMove = (e) => {
         const p = toSvg(e)
+        if (!mouse.active) {
+          mouse.px = p.x
+          mouse.py = p.y
+        }
         mouse.x = p.x
         mouse.y = p.y
-        if (!mouse.active) {
-          cursor.x = p.x
-          cursor.y = p.y
-        }
         mouse.active = true
       }
 
@@ -136,34 +155,34 @@ function LiquidGrid() {
         mouse.active = false
       }
 
-      // Click: push nearby cells away like a ripple and throw off droplets.
+      // Click: send a ripple through nearby cells and throw off droplets.
       const onDown = contextSafe((e) => {
         const p = toSvg(e)
         for (const c of cells) {
           const dx = c.hx - p.x
           const dy = c.hy - p.y
           const d = Math.hypot(dx, dy) || 1
-          if (d < U * 4.5) {
-            const f = 1 - d / (U * 4.5)
-            c.ox += (dx / d) * f * 42
-            c.oy += (dy / d) * f * 42
-            c.s += f * 0.3
+          if (d < U * 5) {
+            const f = 1 - d / (U * 5)
+            c.vx += (dx / d) * f * 14
+            c.vy += (dy / d) * f * 14
+            c.vs += f * 0.12
           }
         }
 
         const group = svg.querySelector(`[data-group="${Math.random() < 0.5 ? 'lime' : 'lavender'}"]`)
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 9; i++) {
           const drop = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
           group.appendChild(drop)
-          const angle = (i / 8) * Math.PI * 2 + Math.random() * 0.6
-          const dist = gsap.utils.random(U, U * 2.8)
+          const angle = (i / 9) * Math.PI * 2 + Math.random() * 0.6
+          const dist = gsap.utils.random(U, U * 3)
           gsap.fromTo(
             drop,
-            { attr: { cx: p.x, cy: p.y, r: gsap.utils.random(10, 22) } },
+            { attr: { cx: p.x, cy: p.y, r: gsap.utils.random(12, 24) } },
             {
               attr: { cx: p.x + Math.cos(angle) * dist, cy: p.y + Math.sin(angle) * dist, r: 0 },
-              duration: gsap.utils.random(0.8, 1.2),
-              ease: 'power3.out',
+              duration: gsap.utils.random(0.9, 1.4),
+              ease: 'expo.out',
               onComplete: () => drop.remove(),
             },
           )
@@ -174,10 +193,18 @@ function LiquidGrid() {
         if (e.pointerType !== 'mouse') onLeave()
       }
 
-      wrap.addEventListener('pointermove', onMove)
-      wrap.addEventListener('pointerleave', onLeave)
+      // Touch: pointer events stop once a drag turns into a scroll, so follow the finger via touchmove.
+      const onTouch = (e) => {
+        if (e.touches[0]) onMove(e.touches[0])
+      }
+
+      scope.addEventListener('pointermove', onMove)
+      scope.addEventListener('pointerleave', onLeave)
+      scope.addEventListener('pointerup', onPointerUp)
+      scope.addEventListener('touchstart', onTouch, { passive: true })
+      scope.addEventListener('touchmove', onTouch, { passive: true })
+      scope.addEventListener('touchend', onLeave, { passive: true })
       wrap.addEventListener('pointerdown', onDown)
-      wrap.addEventListener('pointerup', onPointerUp)
 
       const observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting
@@ -185,16 +212,14 @@ function LiquidGrid() {
       observer.observe(wrap)
 
       // Scroll: pin the hero on desktop while the colored cells flow into a new shape.
-      // Looked up from the DOM because a parent's ref isn't attached yet when this effect runs.
-      const pinTarget = wrap.closest('[data-pin-scope]') || wrap
       const mm = gsap.matchMedia()
       mm.add({ desktop: '(min-width: 900px)', mobile: '(max-width: 899px)' }, (ctx) => {
         const { desktop } = ctx.conditions
         gsap
           .timeline({
             scrollTrigger: desktop
-              ? { trigger: pinTarget, start: 'top top', end: '+=120%', scrub: 1, pin: true }
-              : { trigger: wrap, start: 'top 70%', end: 'bottom 10%', scrub: 1 },
+              ? { trigger: scope, start: 'top top', end: '+=120%', scrub: 1.2, pin: true }
+              : { trigger: wrap, start: 'top 70%', end: 'bottom 10%', scrub: 1.2 },
           })
           .to(morph, { p: 1, ease: 'none' }, 0)
           .to(linesRef.current, { y: -U * 0.6, opacity: 0.4, ease: 'none' }, 0)
@@ -202,10 +227,13 @@ function LiquidGrid() {
 
       return () => {
         gsap.ticker.remove(tick)
-        wrap.removeEventListener('pointermove', onMove)
-        wrap.removeEventListener('pointerleave', onLeave)
+        scope.removeEventListener('pointermove', onMove)
+        scope.removeEventListener('pointerleave', onLeave)
+        scope.removeEventListener('pointerup', onPointerUp)
+        scope.removeEventListener('touchstart', onTouch)
+        scope.removeEventListener('touchmove', onTouch)
+        scope.removeEventListener('touchend', onLeave)
         wrap.removeEventListener('pointerdown', onDown)
-        wrap.removeEventListener('pointerup', onPointerUp)
         observer.disconnect()
         mm.revert()
       }
@@ -229,8 +257,8 @@ function LiquidGrid() {
         aria-label="Interactive liquid grid illustration"
       >
         <defs>
-          <filter id="goo" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+          <filter id="goo" x="-30%" y="-30%" width="160%" height="160%" colorInterpolationFilters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
             <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -11" />
           </filter>
         </defs>
@@ -248,9 +276,7 @@ function LiquidGrid() {
         </g>
 
         <CellLayer layer="lavender" color="var(--lavender)" />
-        <CellLayer layer="lime" color="var(--lime)">
-          <circle ref={blobRef} r="0" />
-        </CellLayer>
+        <CellLayer layer="lime" color="var(--lime)" />
       </svg>
     </div>
   )

@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap.js'
 import LiquidGrid from './LiquidGrid.jsx'
+import HighlightShape from './HighlightShape.jsx'
+import MagneticButton from '../MagneticButton/MagneticButton.jsx'
 import './Hero.css'
 
 function CubesIcon() {
@@ -24,7 +26,7 @@ function Hero() {
       gsap
         .timeline({ defaults: { ease: 'power3.out' } })
         .from('.hero__line > span', { yPercent: 110, duration: 0.9, stagger: 0.1 })
-        .from('.hero__hl', { backgroundSize: '0% 100%', duration: 0.8, stagger: 0.15 }, '-=0.4')
+        .from('.hero__hl-clip', { attr: { width: 0 }, duration: 1.1, ease: 'power2.inOut' }, '-=0.4')
         .from('.hero__text', { y: 16, opacity: 0, duration: 0.7 }, '-=0.5')
 
       gsap.to('.hero__cubes', { y: -4, rotate: 8, duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1 })
@@ -36,6 +38,7 @@ function Hero() {
     <section className="hero" ref={heroRef}>
       <div className="hero__content">
         <h1 className="hero__title">
+          <HighlightShape />
           <span className="hero__line">
             <span>
               Discover the joy of <CubesIcon />
@@ -56,6 +59,9 @@ function Hero() {
           Radix builds rooted, scalable software for teams that want to move fast without
           shaking their foundations, from the first idea all the way to production.
         </p>
+        <div className="hero__cta" data-reveal>
+          <MagneticButton href="#about">Get started</MagneticButton>
+        </div>
       </div>
 
       <div className="hero__visual">
