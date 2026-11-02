@@ -1,0 +1,49 @@
+.magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.magnetic-btn--sm {
+  padding: 8px 14px;
+  font-size: 11px;
+}
+
+.magnetic-btn--md {
+  padding: 14px 28px;
+  font-size: 12px;
+}
+
+.magnetic-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--lime);
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.35s ease;
+}
+
+.magnetic-btn span {
+  position: relative;
+  transition: color 0.35s ease;
+}
+
+.magnetic-btn:hover::before,
+.magnetic-btn:focus-visible::before {
+  transform: translateY(0);
+}
+
+.magnetic-btn:hover span,
+.magnetic-btn:focus-visible span {
+  color: var(--ink);
+}
