@@ -32,3 +32,13 @@ export const SPRINT_LEGEND = [
 
 // A pixel "R" on a 5 x 7 grid: 1 = letter, 0 = background.
 export const R_PIXELS = ['11110', '10001', '10001', '11110', '10100', '10010', '10001']
+
+// The R's cells as [column, row] in the order a pen would draw it:
+// up the stem from the root, across the top, round the bowl, back along the middle, down the leg.
+export const R_STROKE = [
+  [0, 6], [0, 5], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0],
+  [1, 0], [2, 0], [3, 0],
+  [4, 1], [4, 2],
+  [3, 3], [2, 3], [1, 3],
+  [2, 4], [3, 5], [4, 6],
+]

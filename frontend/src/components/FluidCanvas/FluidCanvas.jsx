@@ -4,7 +4,7 @@ import { LIQUID_THEMES, watchLiquidSection } from '../../lib/liquidTheme.js'
 import { createFluid } from './createFluid.js'
 import './FluidCanvas.css'
 
-const DYE_STRENGTH = 0.1
+const DYE_STRENGTH = 0.13
 const IDLE_AFTER = 8
 const THEME_EASE = { duration: 1.4, ease: 'power2.out' }
 
