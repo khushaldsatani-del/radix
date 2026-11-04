@@ -75,31 +75,60 @@
   justify-content: center;
 }
 
-.liquid-grid {
-  width: 100%;
-  max-width: 620px;
-  cursor: crosshair;
-  touch-action: pan-y;
-}
+/* ---------- Liquid core ---------- */
 
-.liquid-grid svg {
+.core {
   display: block;
-  width: 100%;
+  width: min(100%, 540px);
   height: auto;
   overflow: visible;
+  cursor: pointer;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.liquid-grid__dots {
-  fill: var(--dot);
-}
-
-.liquid-grid__lines {
+.core__ring {
   fill: none;
   stroke: var(--dot);
+  stroke-width: 1;
+  stroke-dasharray: 2 8;
 }
 
-.liquid-grid__lines * {
-  vector-effect: non-scaling-stroke;
+.core__root {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.core__node {
+  fill: var(--card);
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.core__node--lime,
+.core__signal--lime {
+  fill: var(--lime);
+}
+
+.core__node--lavender,
+.core__signal--lavender {
+  fill: var(--lavender);
+}
+
+.core__signal {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.core__lime {
+  fill: var(--lime);
+}
+
+.core__lavender {
+  fill: var(--lavender);
 }
 
 @media (max-width: 899px) {

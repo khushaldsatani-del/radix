@@ -1,0 +1,55 @@
+/* Sticks in the middle of the screen. White with "difference" blending shows black on the
+   white section and inverts the photos passing behind it. */
+.reveal-text {
+  position: sticky;
+  top: 50%;
+  /* Sits behind the photos, which scroll over it. */
+  z-index: 0;
+  margin: 0;
+  /* Holds the headline mid-screen until the last photo's bottom reaches the screen's bottom */
+  margin-bottom: max(0px, calc(50vh - 1.9em));
+  min-height: 1.9em;
+  font-family: var(--font-sans);
+  font-size: clamp(2.5rem, 7.45vw, 9rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-align: center;
+  color: #fff;
+  mix-blend-mode: difference;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.reveal-text__layer {
+  position: absolute;
+  inset: 0;
+  padding-inline: 40px;
+}
+
+.reveal-text__line {
+  display: block;
+}
+
+.reveal-text__mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: top;
+}
+
+.reveal-text__word {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .reveal-text {
+    font-size: 9vw;
+  }
+
+  .reveal-text__layer {
+    padding-inline: 16px;
+  }
+}

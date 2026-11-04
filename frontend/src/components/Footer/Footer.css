@@ -113,7 +113,7 @@
 .footer__grid {
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 32px;
   max-width: 1440px;
   margin: clamp(80px, 10vw, 140px) auto 0;
@@ -224,7 +224,17 @@
   }
 }
 
-/* ---------- Bottom bar ---------- */
+/* ---------- Disclaimer and bottom bar ---------- */
+
+.footer__disclaimer {
+  max-width: 1440px;
+  margin: 24px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
 
 .footer__bottom {
   display: flex;
@@ -251,9 +261,74 @@
 @media (max-width: 760px) {
   .footer__grid {
     grid-template-columns: 1fr 1fr;
+    row-gap: 28px;
   }
 
   .footer__tagline {
     grid-column: 1 / -1;
   }
+}
+
+/* ---------- Social icons ---------- */
+
+/* Beats the column's stacked list layout. */
+.footer__col .social {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social__link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cell);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.35s ease,
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.45s ease;
+}
+
+/* Lime fill that rises from the bottom on hover, like the site's buttons. */
+.social__link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--lime);
+  transform: translateY(101%);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.social__link svg {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.social__link:hover,
+.social__link:focus-visible {
+  border-color: var(--ink);
+  box-shadow: 0 10px 20px -12px rgba(17, 17, 17, 0.45);
+  transform: translateY(-3px);
+}
+
+.social__link:hover::before,
+.social__link:focus-visible::before {
+  transform: translateY(0);
+}
+
+.social__link:hover svg,
+.social__link:focus-visible svg {
+  transform: scale(1.1) rotate(-6deg);
 }

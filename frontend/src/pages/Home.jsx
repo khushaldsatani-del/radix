@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 import { gsap, useGSAP } from '../lib/gsap.js'
+import DisclaimerBar from '../components/Legal/DisclaimerBar.jsx'
 import Navbar from '../components/Navbar/Navbar.jsx'
 import Hero from '../components/Hero/Hero.jsx'
 import About from '../components/About/About.jsx'
-import Team from '../components/Team/Team.jsx'
+import TeamReveal from '../components/Team/TeamReveal.jsx'
 import Footer from '../components/Footer/Footer.jsx'
 
 function Home() {
@@ -25,18 +26,17 @@ function Home() {
     { scope: pageRef },
   )
 
-  // About sits outside the hero wrapper, which gets pinned while scrolling.
   return (
     <>
-      {/* Anchor for "#top" links; the hero itself moves while pinned, so it can't be the target. */}
       <span id="top" aria-hidden="true" />
-      <main className="page" ref={pageRef} data-pin-scope data-liquid="hero">
+      <main className="page" ref={pageRef} data-liquid="hero">
+        <DisclaimerBar />
         <Navbar />
         <Hero />
       </main>
       <About />
-      <Team />
-      <Footer />
+      <TeamReveal />
+      <Footer home />
     </>
   )
 }

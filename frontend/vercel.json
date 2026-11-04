@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/(imprint|privacy)/?", "destination": "/index.html" }]
+}

@@ -1,0 +1,224 @@
+/* ---------- Disclaimer banner ---------- */
+
+.disclaimer-bar {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: 8px var(--gutter);
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.disclaimer-bar__copy {
+  display: none;
+}
+
+/* Phones: one line that scrolls, instead of three or four wrapped lines. */
+@media (max-width: 760px) {
+  .disclaimer-bar {
+    padding: 8px 0;
+    text-align: left;
+  }
+
+  /* Soft fade at both edges so the text doesn't cut off abruptly; the dark bar stays solid. */
+  .disclaimer-bar::before,
+  .disclaimer-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 24px;
+    pointer-events: none;
+  }
+
+  .disclaimer-bar::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--ink), transparent);
+  }
+
+  .disclaimer-bar::after {
+    right: 0;
+    background: linear-gradient(-90deg, var(--ink), transparent);
+  }
+
+  .disclaimer-bar__track {
+    display: flex;
+    width: max-content;
+    animation: disclaimer-scroll 28s linear infinite;
+  }
+
+  .disclaimer-bar__text {
+    flex: none;
+    padding-right: 64px;
+    white-space: nowrap;
+  }
+
+  .disclaimer-bar__copy {
+    display: inline;
+  }
+
+  /* Tap and hold to pause and read. */
+  .disclaimer-bar:active .disclaimer-bar__track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes disclaimer-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* No motion: wrap the text normally instead. */
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .disclaimer-bar {
+    padding: 8px var(--gutter);
+    font-size: 11px;
+  }
+
+  .disclaimer-bar::before,
+  .disclaimer-bar::after {
+    display: none;
+  }
+
+  .disclaimer-bar__track {
+    width: auto;
+    animation: none;
+  }
+
+  .disclaimer-bar__text {
+    padding: 0;
+    white-space: normal;
+  }
+
+  .disclaimer-bar__copy {
+    display: none;
+  }
+}
+
+/* ---------- Legal pages ---------- */
+
+.legal {
+  position: relative;
+  z-index: 1;
+}
+
+.legal__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px;
+}
+
+.legal__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 13px;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.legal__back:hover {
+  background: var(--cell);
+}
+
+.legal__back span {
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.legal__back:hover span {
+  transform: translateX(-3px);
+}
+
+.legal__main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(40px, 7vw, 96px) var(--gutter) clamp(24px, 4vw, 48px);
+}
+
+.legal__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+.legal__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 13px;
+}
+
+.legal__label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.legal__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.legal__intro {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.legal__section {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+
+.legal__section h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.legal__section p {
+  margin: 0 0 12px;
+  color: #3d3d3d;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.legal__section p:last-child {
+  margin-bottom: 0;
+}
+
+.legal__section a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .legal__bar {
+    padding: 16px var(--gutter);
+  }
+}

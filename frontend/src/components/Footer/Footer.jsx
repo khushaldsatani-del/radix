@@ -2,10 +2,12 @@ import { useRef } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap.js'
 import HighlightShape from '../Hero/HighlightShape.jsx'
 import MagneticButton from '../MagneticButton/MagneticButton.jsx'
+import { SITE } from '../../config/site.js'
+import Link from '../Link.jsx'
+import SocialIcons from './SocialIcons.jsx'
 import './Footer.css'
 
-// TODO: replace with the team's real contact address.
-const CONTACT_EMAIL = 'hello@radix.dev'
+const CONTACT_EMAIL = SITE.email
 const WORDMARK = 'RADIX'
 const YEAR = new Date().getFullYear()
 
@@ -13,21 +15,45 @@ const COLUMNS = [
   {
     title: 'Explore',
     links: [
-      { label: 'Home', href: '#top' },
-      { label: 'About', href: '#about' },
-      { label: 'Team', href: '#team' },
+      { label: 'Home', href: '#top', section: true },
+      { label: 'About', href: '#about', section: true },
+      { label: 'Team', href: '#team', section: true },
     ],
   },
   {
     title: 'Connect',
     links: [
       { label: 'Email', href: `mailto:${CONTACT_EMAIL}` },
-      { label: 'GitHub', href: 'https://github.com/khushaldsatani-del/radix', external: true },
+    ],
+    social: true,
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Imprint', route: '/imprint' },
+      { label: 'Privacy Policy', route: '/privacy' },
     ],
   },
 ]
 
-function Footer() {
+// Section links scroll in place on the homepage; from a legal page they go home first.
+function FooterLink({ link, home }) {
+  const content = (
+    <>
+      <span>{link.label}</span>
+      <span aria-hidden="true">{link.external ? '↗' : '→'}</span>
+    </>
+  )
+  if (link.route) return <Link className="footer__link" to={link.route}>{content}</Link>
+  if (link.section && !home) return <Link className="footer__link" to={'/' + link.href}>{content}</Link>
+  return (
+    <a className="footer__link" href={link.href} {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+      {content}
+    </a>
+  )
+}
+
+function Footer({ home = false }) {
   const ref = useRef(null)
 
   useGSAP(
@@ -114,17 +140,11 @@ function Footer() {
             <ul>
               {col.links.map((link) => (
                 <li key={link.label}>
-                  <a
-                    className="footer__link"
-                    href={link.href}
-                    {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  >
-                    <span>{link.label}</span>
-                    <span aria-hidden="true">{link.external ? '↗' : '→'}</span>
-                  </a>
+                  <FooterLink link={link} home={home} />
                 </li>
               ))}
             </ul>
+            {col.social && <SocialIcons />}
           </nav>
         ))}
       </div>
@@ -137,8 +157,10 @@ function Footer() {
         ))}
       </p>
 
+      <p className="footer__disclaimer">{SITE.disclaimer}</p>
+
       <div className="footer__bottom">
-        <span>© {YEAR} Radix. All rights reserved.</span>
+        <span>© {YEAR} Radix · {SITE.project}</span>
         <a className="footer__top" href="#top">
           Back to top <span aria-hidden="true">↑</span>
         </a>

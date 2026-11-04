@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap.js'
-import LiquidGrid from './LiquidGrid.jsx'
+import HeroCore from './HeroCore.jsx'
 import HighlightShape from './HighlightShape.jsx'
 import MagneticButton from '../MagneticButton/MagneticButton.jsx'
 import './Hero.css'
@@ -65,7 +65,7 @@ function Hero() {
       </div>
 
       <div className="hero__visual">
-        <LiquidGrid />
+        <HeroCore />
       </div>
     </section>
   )

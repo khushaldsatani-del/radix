@@ -19,7 +19,7 @@ export const APPROACH = [
   },
 ]
 
-export const VALUES = ['Integrity', 'Collaboration', 'Curiosity', 'Inclusivity', 'Ownership']
+export const VALUES = ['Integrity', 'Collaboration', 'Curiosity', 'Inclusivity', 'Responsibility']
 
 // Seven days of a sprint: plan on day one, build through the week, review at the end.
 export const SPRINT_DAYS = ['plan', 'build', 'build', 'build', 'build', 'build', 'review']
