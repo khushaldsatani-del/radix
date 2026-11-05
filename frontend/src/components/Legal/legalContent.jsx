@@ -3,6 +3,7 @@ import { SITE, isPlaceholder } from '../../config/site.js'
 const { imprint, hosting } = SITE
 const address = imprint.address.filter((line) => !isPlaceholder(line))
 const emailLink = <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+const supportLink = <a href={`mailto:${SITE.supportEmail}`}>{SITE.supportEmail}</a>
 
 // Imprint (Impressum) and Privacy Policy copy. Names, email and address come from config/site.js.
 export const LEGAL_PAGES = {
@@ -32,7 +33,9 @@ export const LEGAL_PAGES = {
         heading: 'Contact',
         body: (
           <p>
-            Email: {emailLink}
+            Business enquiries: {emailLink}
+            <br />
+            General contact and support: {supportLink}
           </p>
         ),
       },
@@ -48,7 +51,7 @@ export const LEGAL_PAGES = {
         heading: 'Liability for links',
         body: (
           <p>
-            This website contains links to external websites, such as GitHub. We have no influence over their
+            This website contains links to external websites, such as our Instagram, GitHub and LinkedIn profiles. We have no influence over their
             content and accept no liability for it; the respective provider is always responsible. If we become
             aware of any legal violations, we will remove such links immediately.
           </p>
@@ -72,7 +75,7 @@ export const LEGAL_PAGES = {
             {imprint.organisation}, {imprint.contactPerson}
             {address.length > 0 && `, ${address.join(', ')}`}
             <br />
-            Email: {emailLink}
+            Email: {emailLink} (or {supportLink} for general questions)
           </p>
         ),
       },
@@ -132,7 +135,7 @@ export const LEGAL_PAGES = {
         heading: '6. External links',
         body: (
           <p>
-            Our website links to external services such as GitHub. No data is transferred to them unless you click
+            Our website links to external services such as Instagram, GitHub and LinkedIn. No data is transferred to them unless you click
             such a link; from then on, the privacy policy of the respective provider applies.
           </p>
         ),

@@ -15,23 +15,24 @@ export const SITE = {
   // Project credit line in the footer.
   project: 'Chemnitz, Germany · Planspiel Web Engineering WS 2026/27',
 
-  // Team inbox used for "Start a project", the footer and both legal pages.
-  email: '[team email address]',
+  // Professional and business enquiries: the main address in the footer, Imprint and Privacy Policy.
+  email: 'radix.team@gmail.com',
+  // General contact and support.
+  supportEmail: 'contact.radixit@gmail.com',
 
-  // Social profiles shown as icons in the footer. Leave empty until the links are ready;
-  // an empty one still shows its icon but isn't clickable.
+  // Social profiles shown as icons in the footer. An empty one is left out.
   social: {
-    instagram: '',
-    github: '',
-    linkedin: '',
+    instagram: 'https://www.instagram.com/radix.it',
+    github: 'https://github.com/Radix-it-08',
+    linkedin: 'https://www.linkedin.com/in/radix-it',
   },
 
   // Imprint (Impressum): the person responsible for the site's content.
   imprint: {
-    contactPerson: '[Full name of the contact person]',
+    contactPerson: 'Khushal Satani',
     organisation: 'Radix (Planspiel team)',
-    // Leave as-is if your guidelines don't require a postal address; it is hidden while it's a placeholder.
-    address: ['[Street and number]', '[Postcode and city]', '[Country]'],
+    // The university hosting the Planspiel project, so no private address is published.
+    address: ['Technische Universität Chemnitz', 'Straße der Nationen 62', '09111 Chemnitz', 'Germany'],
   },
 
   // Where the site is hosted, named in the Privacy Policy.

@@ -32,26 +32,20 @@ const ICONS = [
   },
 ]
 
-// Round icon buttons; a profile without a URL yet shows its icon but isn't a link.
+// Icon links to the team's profiles; a profile without a URL is left out.
 function SocialIcons() {
+  const links = ICONS.filter(({ key }) => SITE.social[key])
+  if (!links.length) return null
+
   return (
     <ul className="social">
-      {ICONS.map(({ key, label, svg }) => {
-        const url = SITE.social[key]
-        return (
-          <li key={key}>
-            {url ? (
-              <a className="social__link" href={url} target="_blank" rel="noreferrer" aria-label={label}>
-                {svg}
-              </a>
-            ) : (
-              <span className="social__link is-pending" aria-label={`${label} (coming soon)`} title="Coming soon">
-                {svg}
-              </span>
-            )}
-          </li>
-        )
-      })}
+      {links.map(({ key, label, svg }) => (
+        <li key={key}>
+          <a className="social__link" href={SITE.social[key]} target="_blank" rel="noreferrer" aria-label={label} title={label}>
+            {svg}
+          </a>
+        </li>
+      ))}
     </ul>
   )
 }

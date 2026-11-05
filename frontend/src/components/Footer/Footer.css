@@ -269,66 +269,70 @@
   }
 }
 
+/* ---------- Email list ---------- */
+
+.footer__emails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 0;
+}
+
+.footer__emails dt {
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer__emails dd {
+  margin: 0;
+}
+
 /* ---------- Social icons ---------- */
 
-/* Beats the column's stacked list layout. */
+/* Small, quiet outline icons that sit with the text links; they fill in on hover. */
 .footer__col .social {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  margin: 8px 0 0;
+  gap: 8px;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .social__link {
-  position: relative;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  overflow: hidden;
+  width: 34px;
+  height: 34px;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--cell);
+  border-radius: 50%;
   color: var(--ink);
   cursor: pointer;
   transition:
-    border-color 0.35s ease,
-    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
-    box-shadow 0.45s ease;
-}
-
-/* Lime fill that rises from the bottom on hover, like the site's buttons. */
-.social__link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--lime);
-  transform: translateY(101%);
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .social__link svg {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  width: 15px;
+  height: 15px;
 }
 
 .social__link:hover,
 .social__link:focus-visible {
   border-color: var(--ink);
-  box-shadow: 0 10px 20px -12px rgba(17, 17, 17, 0.45);
-  transform: translateY(-3px);
+  background: var(--ink);
+  color: var(--lime);
+  transform: translateY(-2px);
 }
 
-.social__link:hover::before,
-.social__link:focus-visible::before {
-  transform: translateY(0);
-}
-
-.social__link:hover svg,
-.social__link:focus-visible svg {
-  transform: scale(1.1) rotate(-6deg);
+.social__link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }

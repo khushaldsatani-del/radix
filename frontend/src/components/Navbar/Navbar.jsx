@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import MagneticButton from '../MagneticButton/MagneticButton.jsx'
+import { openContact } from '../../lib/contact.js'
 import './Navbar.css'
 
 const LINKS = [
@@ -47,7 +48,7 @@ function Navbar() {
         ))}
       </nav>
 
-      <MagneticButton size="sm" href="#contact">
+      <MagneticButton size="sm" href="#contact" onClick={openContact}>
         Contact us
       </MagneticButton>
 

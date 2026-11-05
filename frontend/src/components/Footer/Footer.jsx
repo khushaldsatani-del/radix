@@ -5,9 +5,14 @@ import MagneticButton from '../MagneticButton/MagneticButton.jsx'
 import { SITE } from '../../config/site.js'
 import Link from '../Link.jsx'
 import SocialIcons from './SocialIcons.jsx'
+import { openContact } from '../../lib/contact.js'
 import './Footer.css'
 
-const CONTACT_EMAIL = SITE.email
+// Business enquiries first, general contact and support second.
+const EMAILS = [
+  { label: 'Business enquiries', address: SITE.email },
+  { label: 'Contact & support', address: SITE.supportEmail },
+]
 const WORDMARK = 'RADIX'
 const YEAR = new Date().getFullYear()
 
@@ -23,7 +28,8 @@ const COLUMNS = [
   {
     title: 'Connect',
     links: [
-      { label: 'Email', href: `mailto:${CONTACT_EMAIL}` },
+      { label: 'Business email', href: `mailto:${SITE.email}`, contact: true },
+      { label: 'Support email', href: `mailto:${SITE.supportEmail}`, contact: true },
     ],
     social: true,
   },
@@ -43,6 +49,11 @@ function FooterLink({ link, home }) {
       <span>{link.label}</span>
       <span aria-hidden="true">{link.external ? '↗' : '→'}</span>
     </>
+  )
+  if (link.contact) return (
+    <a className="footer__link" href={link.href} onClick={openContact}>
+      {content}
+    </a>
   )
   if (link.route) return <Link className="footer__link" to={link.route}>{content}</Link>
   if (link.section && !home) return <Link className="footer__link" to={'/' + link.href}>{content}</Link>
@@ -122,10 +133,21 @@ function Footer({ home = false }) {
           </span>
         </h2>
         <div className="footer__actions">
-          <MagneticButton href={`mailto:${CONTACT_EMAIL}`}>Start a project</MagneticButton>
-          <a className="footer__email" href={`mailto:${CONTACT_EMAIL}`}>
-            {CONTACT_EMAIL}
-          </a>
+          <MagneticButton href={`mailto:${SITE.email}`} onClick={openContact}>
+            Contact us
+          </MagneticButton>
+          <dl className="footer__emails">
+            {EMAILS.map(({ label, address }) => (
+              <div key={address}>
+                <dt>{label}</dt>
+                <dd>
+                  <a className="footer__email" href={`mailto:${address}`}>
+                    {address}
+                  </a>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
 

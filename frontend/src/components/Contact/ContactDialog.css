@@ -1,0 +1,245 @@
+.contact {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 24px var(--gutter);
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+}
+
+.contact[open] {
+  display: grid;
+  place-items: center;
+}
+
+.contact::backdrop {
+  background: rgba(17, 17, 17, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.contact__panel {
+  position: relative;
+  width: min(100%, 760px);
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--card);
+  box-shadow: 0 40px 80px -40px rgba(17, 17, 17, 0.45);
+  color: var(--ink);
+}
+
+.contact__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.contact__close span {
+  position: absolute;
+  width: 15px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+
+.contact__close span:last-child {
+  transform: rotate(-45deg);
+}
+
+.contact__close:hover {
+  background: var(--cell);
+  transform: rotate(90deg);
+}
+
+.contact__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.contact__eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.contact__title {
+  margin: 18px 0 8px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.contact__intro {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.contact__channels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ---------- Channel card ---------- */
+
+.channel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fafafa;
+  transition: border-color 0.3s ease;
+}
+
+.channel:hover {
+  border-color: #cfcfcf;
+}
+
+.channel__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.channel__text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.channel__address {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 10px 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  font-size: 14px;
+}
+
+.channel__address > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.channel__copy {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.channel__copy:hover {
+  background: var(--cell);
+}
+
+.channel__copy.is-copied {
+  border-color: var(--ink);
+  background: var(--lime);
+}
+
+.channel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 4px;
+}
+
+.channel__primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.channel__primary:hover {
+  background: var(--lime);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.channel__secondary {
+  color: var(--ink);
+  font-size: 13px;
+  text-underline-offset: 3px;
+}
+
+.channel__secondary:hover {
+  text-decoration-thickness: 2px;
+}
+
+.contact :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .contact[open] {
+    place-items: end center;
+    padding: 12px;
+  }
+
+  .contact__panel {
+    border-radius: 24px;
+  }
+
+  .contact__channels {
+    grid-template-columns: 1fr;
+  }
+}

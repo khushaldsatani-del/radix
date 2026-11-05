@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap.js'
 import HighlightShape from '../Hero/HighlightShape.jsx'
 import MagneticButton from '../MagneticButton/MagneticButton.jsx'
+import { openContact } from '../../lib/contact.js'
 import NameCells from './NameCells.jsx'
 import ApproachSteps from './ApproachSteps.jsx'
 import SprintWeek from './SprintWeek.jsx'
@@ -102,7 +103,9 @@ function About() {
             problem first, then design and build software that stays solid as it grows.
           </p>
           <div data-reveal>
-            <MagneticButton href="#contact">Work with us</MagneticButton>
+            <MagneticButton href="#contact" onClick={openContact}>
+              Work with us
+            </MagneticButton>
           </div>
         </div>
       </div>

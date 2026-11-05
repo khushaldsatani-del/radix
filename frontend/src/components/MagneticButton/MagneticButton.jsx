@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap.js'
 import './MagneticButton.css'
 
-function MagneticButton({ children, href = '#', size = 'md' }) {
+function MagneticButton({ children, href = '#', size = 'md', onClick }) {
   const ref = useRef(null)
 
   useGSAP(
@@ -32,7 +32,7 @@ function MagneticButton({ children, href = '#', size = 'md' }) {
   )
 
   return (
-    <a ref={ref} href={href} className={`magnetic-btn magnetic-btn--${size}`}>
+    <a ref={ref} href={href} className={`magnetic-btn magnetic-btn--${size}`} onClick={onClick}>
       <span>{children}</span>
     </a>
   )
