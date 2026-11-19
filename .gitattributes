@@ -1,0 +1,17 @@
+# Normalise line endings
+* text=auto eol=lf
+
+# Source files
+*.html text
+*.css  text
+*.js   text
+*.json text
+*.md   text
+*.svg  text
+
+# Binary files
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
