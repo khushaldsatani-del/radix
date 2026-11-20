@@ -1,0 +1,8 @@
+.ch-label { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; color: var(--green); }
+.ch-label .n {
+  font-family: var(--f-display); font-weight: 800; font-size: 1.2rem; flex: none;
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--green);
+}
+.ch-label .t { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.3rem); letter-spacing: -.01em; }
+.ch-label::after { content: ""; flex: 1; height: 1px; background: var(--line); max-width: 240px; }
+@media (max-width: 520px) { .ch-label .n { width: 44px; height: 44px; font-size: 1.05rem; } }

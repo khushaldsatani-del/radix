@@ -1,0 +1,23 @@
+.panel {
+  width: min(360px, calc(100vw - 32px)); background: #fff; border: 1px solid var(--line-2); border-radius: 22px; overflow: hidden;
+  box-shadow: 0 40px 70px -30px rgba(15, 27, 38, .5); display: grid; grid-template-rows: auto 1fr auto auto auto;
+  /* dvh accounts for mobile browser toolbars (100vh overflowed on phones) */
+  max-height: min(560px, calc(100vh - 110px)); max-height: min(560px, calc(100dvh - 110px));
+  animation: pop .35s var(--ease) both;
+}
+.panel .ph-top { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--navy); color: #fff; }
+.panel .ph-top .lmark { width: 34px; height: 34px; object-fit: contain; background: #fff; border-radius: 50%; padding: 4px; }
+.panel .ph-top b { font-family: var(--f-display); }
+.panel .ph-top small { display: block; font-size: .74rem; color: #bccad3; font-weight: 400; }
+.panel .ph-top button { margin-left: auto; background: none; border: 0; color: #fff; font-size: 1.5rem; cursor: pointer; line-height: 1; width: 36px; height: 36px; border-radius: 50%; }
+.panel .ph-top button:hover { background: rgba(255, 255, 255, .1); }
+.panel .plog { overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 140px; overscroll-behavior: contain; }
+.panel .psugs { display: flex; gap: 6px; padding: 0 14px 10px; overflow-x: auto; scrollbar-width: none; }
+.panel .psugs::-webkit-scrollbar { display: none; }
+.panel .psugs button { flex: none; font: inherit; font-size: .8rem; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line-2); background: #fff; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.panel .psugs button:hover { border-color: var(--green); color: var(--green); }
+.panel form { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--line); }
+.panel input { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: #fff; color: var(--ink); }
+.panel input::placeholder { color: var(--muted); }
+.panel form button { font: inherit; font-weight: 600; border: 0; border-radius: 10px; padding: 0 14px; background: var(--green); color: #fff; cursor: pointer; }
+.panel .pnote { margin: 0; padding: 0 14px 12px; font-size: .7rem; line-height: 1.4; color: #5e6f7e; text-align: center; }

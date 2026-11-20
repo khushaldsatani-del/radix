@@ -1,0 +1,14 @@
+.step-panel {
+  border: 1px solid var(--line); border-radius: 26px; padding: clamp(24px, 4vw, 44px); min-height: 280px; background: #fff;
+  display: grid; grid-template-columns: 1fr 200px; gap: 30px; align-items: center;
+}
+.step-panel > * { min-width: 0; }
+.step-panel .k { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--green); }
+.step-panel h3 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); font-weight: 800; margin-top: 8px; }
+.step-panel p { color: var(--muted); margin-top: 14px; max-width: 46ch; }
+.step-panel svg { width: 100%; height: auto; color: var(--green); }
+.step-panel .swap { animation: swap .5s var(--ease) both; }
+@media (max-width: 640px) {
+  .step-panel { grid-template-columns: 1fr; min-height: 0; gap: 8px; border-radius: 20px; }
+  .step-panel .art { max-width: 200px; justify-self: center; margin-bottom: -30px; }
+}

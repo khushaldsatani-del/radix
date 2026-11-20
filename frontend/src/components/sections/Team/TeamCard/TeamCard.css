@@ -1,0 +1,48 @@
+.member { perspective: 1200px; outline: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.member .flip { position: relative; display: grid; height: 100%; transform-style: preserve-3d; transition: transform .8s var(--ease); }
+.member.flipped .flip { transform: rotateY(180deg); }
+@media (hover: hover) and (pointer: fine) { .member:hover .flip { transform: rotateY(180deg); } }
+.member .flip > .card { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.member:focus-visible .card { outline: 2px solid var(--emerald); outline-offset: 3px; }
+.member .card { border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: #fff; position: relative; transition: box-shadow .4s, border-color .4s; }
+.member:hover .card { box-shadow: 0 30px 50px -30px rgba(15, 27, 38, .45); }
+
+.member .ph { aspect-ratio: 4 / 3.4; background: var(--bg-2); position: relative; display: grid; place-items: center; overflow: hidden; }
+.member .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; z-index: 1; }
+.member .ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.member .ph .ini {
+  position: relative; width: 46%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--f-display); font-weight: 900; font-size: 2.2rem; background: var(--navy); color: #fff;
+}
+.member:nth-child(even) .ph .ini { background: var(--green); }
+
+.member .body { padding: 18px 20px 20px; display: grid; gap: 6px; }
+.member .num { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.member h3 { font-size: 1.4rem; font-weight: 800; }
+.member .roles { display: flex; gap: 6px; flex-wrap: wrap; }
+.member .roles span { font-size: .8rem; padding: 3px 10px; border-radius: 999px; background: var(--sand); color: var(--soil); font-weight: 500; }
+.member .hint { font-family: var(--f-mono); font-size: .68rem; color: var(--muted); margin-top: 2px; display: none; }
+@media (hover: none), (pointer: coarse) { .member .hint { display: block; } }
+
+/* back face: scrolls instead of clipping when the bio is longer than the card */
+.member .back {
+  transform: rotateY(180deg); background: var(--navy); border-color: var(--navy); color: #fff;
+  padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto;
+}
+.member .back .bimg { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 2px solid var(--emerald); margin-bottom: 6px; flex: none; }
+.member .back .num { color: #9fb3c2; }
+.member .back h3 { color: #fff; }
+.member .back .brole { align-self: flex-start; font-size: .8rem; padding: 3px 10px; border-radius: 999px; background: rgba(127, 224, 214, .16); color: #7fe0d6; font-weight: 500; }
+.member .back p { color: #dce5ea; font-size: .93rem; line-height: 1.55; margin: 6px 0 0; }
+
+@media (max-width: 760px) {
+  .member .card { border-radius: 18px; }
+  .member .body { padding: 14px 14px 16px; }
+  .member h3 { font-size: 1.15rem; }
+  .member .roles span { font-size: .72rem; padding: 2px 8px; }
+  .member .back { padding: 16px 14px; gap: 6px; }
+  .member .back .bimg { width: 48px; height: 48px; }
+  .member .back p { font-size: .84rem; line-height: 1.45; }
+}
+@media (max-width: 340px) { .member h3 { font-size: 1.3rem; } .member .back p { font-size: .93rem; } }
+@media (prefers-reduced-motion: reduce) { .member .flip { transition: none; } }

@@ -1,0 +1,15 @@
+/* Brand tokens: navy + forest green from the logo, mint as a soft highlight. */
+:root {
+  --bg: #ffffff; --bg-2: #f4f8f9; --bg-3: #e6eff1; --line: #e0e8eb; --line-2: #c9d6db;
+  --ink: #0f1b26; --navy: #1b2b3c; --muted: #38444d;
+  --green: #0f766e; --emerald: #14a39a; --mint: #c9efeb; --mint-2: #ebf8f6;
+  --soil: #1b2b3c; --clay: #0e7490; --sand: #eef5f7; --sand-2: #d6e5ea;
+  --f-display: "Schibsted Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --wrap: 1220px;
+  --gutter: max(20px, env(safe-area-inset-left, 0px));
+  --ease: cubic-bezier(.2, .75, .2, 1);
+  --header-h: 70px;
+  color-scheme: light;
+}

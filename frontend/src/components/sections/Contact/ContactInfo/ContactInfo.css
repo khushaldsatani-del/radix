@@ -1,0 +1,13 @@
+.contact-info .eyebrow { color: #7fe0d6; }
+.contact-info h2 { font-size: clamp(2.2rem, 6.6vw, 5.4rem); font-weight: 900; color: #fff; line-height: .95; margin-top: 14px; }
+.contact-info h2 .thin { font-weight: 500; color: #7fe0d6; }
+.contact-info .l { color: #e1e8ec; margin-top: 20px; max-width: 40ch; font-size: clamp(1rem, 1.4vw, 1.06rem); }
+.cinfo { display: grid; gap: 14px; margin-top: 30px; }
+.cinfo > div:not(.socials) { display: grid; gap: 2px; }
+.cinfo .k { font-family: var(--f-mono); font-size: .78rem; color: #b5c8d1; letter-spacing: .02em; }
+.cinfo a { color: #fff; text-decoration: none; font-size: 1.08rem; font-weight: 500; overflow-wrap: anywhere; }
+.cinfo a:hover { color: #7fe0d6; }
+.socials { display: flex; gap: 10px; margin-top: 6px; }
+.socials a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .2); color: #fff; transition: transform .3s var(--ease), border-color .3s, color .3s; }
+.socials a:hover { transform: translateY(-3px) rotate(-6deg); border-color: #7fe0d6; color: #7fe0d6; }
+.socials svg { width: 18px; height: 18px; }

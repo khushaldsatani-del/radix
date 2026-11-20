@@ -1,0 +1,3 @@
+.disclaimer { position: relative; z-index: 2; background: var(--navy); color: #e6eef2; font-size: .82rem; text-align: center; line-height: 1.45; }
+.disclaimer .wrap { padding-block: 9px; }
+@media (max-width: 520px) { .disclaimer { font-size: .74rem; } }

@@ -1,0 +1,43 @@
+.hero { position: relative; overflow: hidden; }
+.hero .wrap {
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px; align-items: center;
+  padding-block: clamp(36px, 5vw, 64px); position: relative;
+}
+.hero-copy { min-width: 0; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--clay); margin-bottom: 24px; }
+.kicker::before { content: ""; width: 28px; height: 2px; background: var(--clay); }
+/* min size lowered from 3rem so "One Foundation." no longer gets clipped on small phones */
+.hero h1 { font-size: clamp(2.4rem, 5.6vw, 5rem); font-weight: 900; line-height: 1.08; letter-spacing: -.02em; }
+.hero h1 .line { display: block; overflow: hidden; padding: .02em 0 .1em; }
+.hero h1 .line > span { display: inline-block; animation: rise 1s var(--ease) both; }
+.hero h1 .line:nth-child(2) > span { animation-delay: .14s; }
+.hero h1 .thin { font-weight: 500; color: var(--green); font-size: .74em; }
+.lede { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.12rem); max-width: 44ch; margin-top: 26px; animation: fade 1s .45s both; }
+.hero .row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; animation: fade 1s .6s both; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 34px; animation: fade 1s .75s both; }
+.meta span { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: #fff; }
+
+.specimen { position: relative; width: min(760px, 100%); aspect-ratio: 1; justify-self: center; }
+.specimen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.specimen .core {
+  position: absolute; left: 50%; top: 50%; width: 42%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%; background: #fff; display: grid; place-items: center;
+  box-shadow: 0 0 0 1px var(--line), 0 0 0 14px rgba(235, 248, 246, .9), 0 30px 60px -24px rgba(15, 27, 38, .4);
+  animation: corein 1.2s .2s var(--ease) both;
+}
+.specimen .core .lmark { width: 62%; height: auto; display: block; transform: translateX(4%); }
+
+@media (min-width: 981px) {
+  .hero h1 .thin { white-space: nowrap; }
+  .specimen { margin-right: -40px; }
+}
+@media (max-width: 980px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(2.4rem, 10vw, 5rem); }
+  .hero h1 .thin { font-size: 1em; }
+  .specimen { width: min(520px, 100%); }
+}
+@media (max-width: 520px) {
+  .hero .row .btn { flex: 1 1 auto; }
+  .specimen .core { box-shadow: 0 0 0 1px var(--line), 0 0 0 8px rgba(235, 248, 246, .9), 0 20px 40px -20px rgba(15, 27, 38, .4); }
+}

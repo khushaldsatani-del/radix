@@ -1,0 +1,10 @@
+.contact-wrap {
+  border-radius: 34px; background: var(--navy); color: #fff; padding: clamp(24px, 6vw, 72px); position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(32px, 4vw, 48px);
+}
+.contact-wrap > div { position: relative; min-width: 0; }
+.contact-wrap > .contact-roots { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .4; }
+@media (max-width: 940px) { .contact-wrap { grid-template-columns: 1fr; } }
+@media (max-width: 520px) {
+  .contact-wrap { border-radius: 22px; padding: 26px 16px; }
+}

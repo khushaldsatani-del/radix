@@ -1,0 +1,16 @@
+.site-footer { color: var(--muted); font-size: .92rem; margin-top: clamp(60px, 8vw, 100px); border-top: 1px solid var(--line); }
+/* extra bottom room so the floating chat button never covers footer text */
+.site-footer .wrap { padding-block: 48px calc(28px + 70px); display: grid; gap: 30px; }
+.foot-tag { margin-top: 12px; max-width: 34ch; }
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; }
+.foot-grid h4 { margin: 0 0 10px; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; color: var(--ink); font-weight: 500; }
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-grid a { text-decoration: none; overflow-wrap: anywhere; }
+.foot-grid a:hover { color: var(--green); }
+.official { border: 1px solid var(--line-2); border-radius: 14px; padding: 14px 16px; color: var(--ink); font-weight: 600; background: var(--bg-2); }
+.copyline { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 800px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-grid > div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 340px) { .foot-grid { grid-template-columns: 1fr; } }

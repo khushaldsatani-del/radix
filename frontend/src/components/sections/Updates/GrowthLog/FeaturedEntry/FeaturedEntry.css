@@ -1,0 +1,51 @@
+.ge.feat { grid-template-columns: 1fr; justify-items: center; gap: 0; }
+.ge.feat .node { grid-column: 1; grid-row: 1; background: var(--clay); border-color: var(--clay); color: #fff; margin-bottom: -29px; }
+.ge.feat.lit .node { border-color: var(--clay); color: #fff; }
+.ge.feat .card {
+  grid-column: 1; grid-row: 2; width: min(820px, 100%); padding: 0; overflow: hidden; display: grid; grid-template-columns: 1.05fr 1fr;
+  align-items: stretch; gap: 0; border-color: var(--sand-2); background: #fff;
+}
+.ge.feat .card.no-photo { grid-template-columns: 1fr; }
+.ge.feat .card::before { display: none; }
+.ge.feat .photo { margin: 0; position: relative; background: #fff; overflow: hidden; border-right: 1px solid var(--sand-2); padding: 40px 16px 44px; display: grid; place-items: center; }
+.ge.feat .photo img { display: block; width: 100%; height: auto; transform: scale(1.04); transition: transform 1.4s var(--ease); }
+.ge.feat.lit .photo img { transform: none; }
+.ge.feat .photo figcaption {
+  position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); max-width: calc(100% - 20px); text-align: center;
+  background: rgba(255, 255, 255, .92); backdrop-filter: blur(6px); border-radius: 999px; padding: 5px 12px;
+  font-family: var(--f-mono); font-size: .78rem; color: var(--ink); line-height: 1.35;
+}
+.ge.feat .award { padding: 28px 26px; display: grid; gap: 12px; align-content: center; background: linear-gradient(160deg, #fff, var(--sand)); }
+.ge.feat .award .txt { display: grid; gap: 8px; min-width: 0; }
+.ge.feat .award .d { font-family: var(--f-mono); font-weight: 500; font-size: .95rem; color: var(--clay); }
+.ge.feat .award h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 800; line-height: 1.1; }
+.ge.feat .award p { color: var(--muted); font-size: .92rem; }
+
+.medal { position: relative; width: 104px; height: 104px; justify-self: start; }
+.medal svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 24s linear infinite; }
+.medal svg.ring text { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .24em; fill: var(--soil); }
+.medal .disc {
+  position: absolute; inset: 17px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 32% 28%, #f2c9a0, #c98a55 45%, #8a5a34 100%);
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, .18), inset 0 4px 8px rgba(255, 255, 255, .4), 0 14px 24px -12px rgba(107, 74, 51, .7);
+  transform: scale(.4) rotate(-40deg); opacity: 0; transition: transform .9s var(--ease) .3s, opacity .5s .3s;
+}
+.ge.feat.lit .medal .disc { transform: none; opacity: 1; }
+.medal .disc span { font-family: var(--f-display); font-weight: 900; font-size: 1.8rem; color: #fff; line-height: 1; text-shadow: 0 2px 0 rgba(107, 74, 51, .5); }
+.medal .disc span sup { font-size: .45em; vertical-align: top; margin-left: 1px; }
+
+@media (max-width: 820px) {
+  .ge.feat { grid-template-columns: 58px 1fr; justify-items: stretch; }
+  .ge.feat .node { grid-row: 1; margin: 0; }
+  .ge.feat .card { grid-column: 2; grid-row: 1; grid-template-columns: 1fr; }
+  .ge.feat .photo { border-right: 0; border-bottom: 1px solid var(--sand-2); padding: 14px 10px 46px; }
+  .ge.feat .photo img { transform: none !important; }
+  .ge.feat .award { padding: 22px; }
+}
+@media (max-width: 420px) {
+  .ge.feat { grid-template-columns: 42px 1fr; }
+  .ge.feat .award { padding: 18px; }
+  .medal { width: 88px; height: 88px; }
+  .medal .disc { inset: 14px; }
+  .ge.feat .photo figcaption { font-size: .68rem; }
+}

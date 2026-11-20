@@ -1,0 +1,17 @@
+.problem { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: end; }
+.problem > * { min-width: 0; }
+.iceberg { border-radius: 26px; overflow: hidden; border: 1px solid var(--line); }
+.iceberg .above { background: #fff; padding: 22px 26px; }
+.iceberg .below { background: var(--soil); color: #dce5ea; padding: 22px 26px 26px; display: grid; gap: 10px; }
+.iceberg .k { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; color: var(--ink); letter-spacing: .02em; }
+.iceberg .below .k { color: #d6eef0; }
+.iceberg .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.iceberg .chips span { font-size: .9rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: #fff; }
+.iceberg .below .chips span { background: transparent; border-color: rgba(214, 238, 240, .5); color: #fff; }
+.iceberg .gline { height: 3px; background: repeating-linear-gradient(90deg, var(--clay) 0 10px, transparent 10px 16px); }
+@media (max-width: 900px) { .problem { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 520px) {
+  .iceberg { border-radius: 20px; }
+  .iceberg .above, .iceberg .below { padding: 18px; }
+  .iceberg .chips span { font-size: .84rem; }
+}

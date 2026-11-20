@@ -1,0 +1,24 @@
+.cform { background: #fff; color: var(--ink); border-radius: 24px; padding: clamp(20px, 3vw, 32px); display: grid; gap: 14px; }
+.cform h3 { font-size: 1.5rem; font-weight: 800; }
+.cform .submit { justify-self: start; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-size: .86rem; font-weight: 600; }
+/* 16px inputs stop iOS Safari from zooming in on focus */
+.field input, .field select, .field textarea {
+  font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-2);
+  background: var(--bg-2); color: var(--ink); width: 100%; min-height: 46px; transition: border-color .2s, background .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--green); background: #fff; box-shadow: 0 0 0 3px var(--mint-2); }
+.field textarea { min-height: 120px; resize: vertical; }
+.field.invalid input, .field.invalid textarea { border-color: #b4362b; background: #fff7f6; }
+.ferr { color: #b4362b; font-size: .8rem; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fnote { font-size: .8rem; color: var(--muted); }
+.ready { display: grid; gap: 10px; background: var(--mint-2); border: 1px solid var(--mint); border-radius: 16px; padding: 16px; animation: pop .35s var(--ease) both; }
+.ready pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--f-mono); font-size: .78rem; color: var(--ink); max-height: 160px; overflow: auto; }
+.ready .row { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 520px) {
+  .cform { border-radius: 18px; }
+  .two { grid-template-columns: 1fr; }
+  .cform .submit, .ready .row .btn { width: 100%; }
+}

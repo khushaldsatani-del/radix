@@ -1,0 +1,20 @@
+.answers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: clamp(32px, 5vw, 52px); }
+.ans {
+  border: 1px solid var(--line); border-radius: 24px; padding: 30px 28px; display: grid; gap: 14px; align-content: start;
+  background: #fff; position: relative; overflow: hidden;
+  transition: transform .45s var(--ease), box-shadow .45s, border-color .3s, opacity .9s var(--ease);
+}
+.ans:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -32px rgba(15, 27, 38, .45); border-color: var(--mint); }
+.ans .ic { width: 52px; height: 52px; border-radius: 16px; background: var(--mint-2); color: var(--green); display: grid; place-items: center; }
+.ans .ic svg { width: 26px; height: 26px; transition: transform .6s var(--ease); }
+.ans:hover .ic svg { transform: rotate(-10deg) scale(1.1); }
+.ans h3 { font-size: 1.5rem; font-weight: 700; }
+.ans p { color: var(--muted); }
+.ans .bg { position: absolute; right: -10px; bottom: -30px; font-family: var(--f-display); font-weight: 900; font-size: 8rem; line-height: 1; color: var(--bg-2); z-index: 0; transition: color .4s; }
+.ans:hover .bg { color: var(--mint-2); }
+.ans > *:not(.bg) { position: relative; z-index: 1; }
+@media (max-width: 1000px) and (min-width: 641px) {
+  .answers { grid-template-columns: 1fr 1fr; }
+  .answers > :last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) { .answers { grid-template-columns: 1fr; } .ans { padding: 24px 22px; } }

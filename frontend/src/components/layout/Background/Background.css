@@ -1,0 +1,6 @@
+.bgfx {
+  position: fixed; inset: -20%; z-index: 0; pointer-events: none;
+  background: linear-gradient(120deg, #fff 0%, #eaf2fd 22%, #fff 40%, #e6effb 58%, #fff 76%, #edf4fe 100%);
+  background-size: 300% 300%; animation: bgshift 22s ease-in-out infinite alternate;
+}
+.bgdots { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }

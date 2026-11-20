@@ -1,0 +1,6 @@
+.process { margin-top: clamp(32px, 5vw, 52px); display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start; }
+.process-main { min-width: 0; }
+.bar { height: 4px; border-radius: 4px; background: var(--line); margin-top: 22px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--green); }
+.bar i.run { animation: fill 5s linear forwards; }
+@media (max-width: 900px) { .process { grid-template-columns: 1fr; gap: 20px; } }
