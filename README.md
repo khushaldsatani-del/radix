@@ -37,7 +37,7 @@ legacy/                     the original single-file site (backup)
 - Fully responsive from 320px phones to wide desktops
 - Team flip cards, animated hero and background
 - Built-in FAQ chat with pre-written answers (no AI, nothing is stored)
-- Contact form that prepares an email in the visitor's own mail app
+- Contact form that emails the message straight to the team inbox via [FormSubmit](https://formsubmit.co) (no backend needed). One-time setup: send the first message from the live site, then click "Activate Form" in the email FormSubmit sends to `contact.radixit@gmail.com` (check Spam too). The address is `CONTACT.email` in `src/data/content.js`; changing it needs a new activation.
 - Imprint and Privacy Policy pages (`/#imprint`, `/#privacy`)
 
 ## Run Locally

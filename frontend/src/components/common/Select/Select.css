@@ -1,0 +1,30 @@
+/* Matches .field input / textarea in ContactForm.css */
+.sel { position: relative; min-width: 0; }
+.sel-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 46px;
+  font: inherit; font-size: 16px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-2);
+  background: var(--bg-2); color: var(--ink); cursor: pointer; transition: border-color .2s, background .2s, box-shadow .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.sel-btn:focus, .sel-btn:focus-visible, .sel.open .sel-btn {
+  outline: none; border-color: var(--green); background: #fff; box-shadow: 0 0 0 3px var(--mint-2);
+}
+.sel.invalid .sel-btn { border-color: #b4362b; background: #fff7f6; }
+.sel-val { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sel-chev { width: 18px; height: 18px; flex: none; color: var(--muted); transition: transform .25s var(--ease); }
+.sel.open .sel-chev { transform: rotate(180deg); color: var(--green); }
+
+.sel-list {
+  position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none;
+  background: #fff; border: 1px solid var(--line-2); border-radius: 14px; max-height: min(320px, 60vh); overflow-y: auto;
+  overscroll-behavior: contain; box-shadow: 0 24px 44px -22px rgba(15, 27, 38, .45);
+  animation: pop .2s var(--ease) both;
+}
+.sel-list[hidden] { display: none; }
+.sel-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 9px;
+  font-size: .95rem; color: var(--ink); cursor: pointer; user-select: none;
+}
+.sel-list li.active { background: var(--mint-2); }
+.sel-list li[aria-selected="true"] { color: var(--green); font-weight: 600; }
+.sel-list li svg { width: 16px; height: 16px; flex: none; }

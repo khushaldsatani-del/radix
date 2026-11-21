@@ -19,8 +19,10 @@ export default function Header() {
     if (progressRef.current) progressRef.current.style.width = `${f * 100}%`;
     setScrolled(window.scrollY > 8);
 
+    // Last nav-linked section that has scrolled past 40% of the viewport. Sections without
+    // an id (e.g. Process) keep the previous link active instead of clearing it.
     let cur = null;
-    document.querySelectorAll('[data-sec]').forEach((s) => {
+    document.querySelectorAll('[data-sec][id]').forEach((s) => {
       if (s.getBoundingClientRect().top < window.innerHeight * 0.4) cur = s;
     });
     const id = cur?.id || null;
@@ -28,11 +30,11 @@ export default function Header() {
 
     const nav = navRef.current;
     const link = id && nav?.querySelector(`a[href="#${id}"]`);
-    if (link && window.matchMedia('(min-width: 901px)').matches) {
-      setPill({ opacity: 1, left: link.offsetLeft, width: link.offsetWidth });
-    } else {
-      setPill({ opacity: 0 });
-    }
+    const next = link && window.matchMedia('(min-width: 901px)').matches
+      ? { opacity: 1, left: link.offsetLeft, width: link.offsetWidth }
+      : { opacity: 0 };
+    // Only re-render when the pill actually moves
+    setPill((p) => (p.opacity === next.opacity && p.left === next.left && p.width === next.width ? p : next));
   }, []);
 
   useEffect(() => {

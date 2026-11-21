@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { getAssistantFaq, FALLBACK, GREETING } from '@/data/assistant';
+import { getAssistantFaq, findAnswer, FALLBACK, GREETING } from '@/data/assistant';
 import { prefersReducedMotion } from '@/hooks/useReducedMotion';
 import ChatPanel from './ChatPanel/ChatPanel';
 import './ChatAssistant.css';
@@ -18,6 +18,31 @@ export default function ChatAssistant() {
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
+  // Hide the greeting bubble while the contact section (and the footer below it) is on
+  // screen, so it never covers the contact form
+  const [overForm, setOverForm] = useState(false);
+  useEffect(() => {
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const contact = document.getElementById('contact');
+      setOverForm(Boolean(contact) && contact.getBoundingClientRect().top < window.innerHeight);
+    };
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(check); };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    window.addEventListener('popstate', schedule);
+    window.addEventListener('hashchange', schedule);
+    check();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      window.removeEventListener('popstate', schedule);
+      window.removeEventListener('hashchange', schedule);
+    };
+  }, []);
+
   const toggle = (next) => {
     setOpen(next);
     setBubble(false);
@@ -34,8 +59,7 @@ export default function ChatAssistant() {
   }, [open]);
 
   const ask = (text, item) => {
-    const t = text.toLowerCase();
-    const hit = item || faq.find((r) => r.k.some((k) => t.includes(k)));
+    const hit = item || findAnswer(text, faq);
     const botId = nextId();
     setMessages((m) => [...m, { id: nextId(), from: 'user', content: text }, { id: botId, from: 'bot', typing: true }]);
     const timer = setTimeout(() => {
@@ -46,7 +70,7 @@ export default function ChatAssistant() {
 
   return (
     <div className="helper">
-      {bubble && !open && (
+      {bubble && !open && !overForm && (
         <div className="bubble">
           <button type="button" className="bubble-open" onClick={() => toggle(true)}>Welcome to Radix! How can we help you?</button>
           <button type="button" className="bubble-x" aria-label="Hide message" onClick={() => setBubble(false)}>×</button>

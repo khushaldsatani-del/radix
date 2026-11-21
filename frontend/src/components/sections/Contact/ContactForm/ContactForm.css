@@ -1,7 +1,9 @@
 .cform { background: #fff; color: var(--ink); border-radius: 24px; padding: clamp(20px, 3vw, 32px); display: grid; gap: 14px; }
 .cform h3 { font-size: 1.5rem; font-weight: 800; }
 .cform .submit { justify-self: start; }
-.field { display: grid; gap: 6px; min-width: 0; }
+/* align-content: start keeps label + input at the top when the neighbouring field shows an
+   error message (the grid row grows and would otherwise stretch/shift this field) */
+.field { display: grid; gap: 6px; min-width: 0; align-content: start; }
 .field label { font-size: .86rem; font-weight: 600; }
 /* 16px inputs stop iOS Safari from zooming in on focus */
 .field input, .field select, .field textarea {
@@ -9,16 +11,31 @@
   background: var(--bg-2); color: var(--ink); width: 100%; min-height: 46px; transition: border-color .2s, background .2s;
 }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--green); background: #fff; box-shadow: 0 0 0 3px var(--mint-2); }
-.field textarea { min-height: 120px; resize: vertical; }
+.field textarea { min-height: 170px; resize: vertical; }
+.fstatus .fdev { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); overflow-wrap: anywhere; }
+/* Browser autofill paints its own blue/yellow background; repaint it in the site's field colours */
+.field input:-webkit-autofill, .field input:-webkit-autofill:hover {
+  -webkit-text-fill-color: var(--ink); caret-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-2) inset; transition: background-color 99999s 0s;
+}
+.field input:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0 1000px #fff inset, 0 0 0 3px var(--mint-2); }
+.field.invalid input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px #fff7f6 inset; }
+.field input:autofill { background: var(--bg-2); }
 .field.invalid input, .field.invalid textarea { border-color: #b4362b; background: #fff7f6; }
 .ferr { color: #b4362b; font-size: .8rem; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .fnote { font-size: .8rem; color: var(--muted); }
-.ready { display: grid; gap: 10px; background: var(--mint-2); border: 1px solid var(--mint); border-radius: 16px; padding: 16px; animation: pop .35s var(--ease) both; }
-.ready pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--f-mono); font-size: .78rem; color: var(--ink); max-height: 160px; overflow: auto; }
-.ready .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.cform .submit:disabled { opacity: .7; cursor: progress; }
+/* the live region stays in the DOM for screen readers; cancel the grid gap while it is empty */
+.cform .flive:empty { margin-top: -14px; }
+.fstatus { display: grid; gap: 4px; border-radius: 16px; padding: 14px 16px; font-size: .92rem; animation: pop .35s var(--ease) both; }
+.fstatus.ok { background: var(--mint-2); border: 1px solid var(--mint); color: var(--ink); }
+.fstatus.ok b { color: var(--green); }
+.fstatus.err { background: #fff7f6; border: 1px solid #f1c9c4; color: var(--ink); }
+.fstatus.err b { color: #b4362b; }
+.fstatus a { color: var(--green); font-weight: 600; }
 @media (max-width: 520px) {
   .cform { border-radius: 18px; }
   .two { grid-template-columns: 1fr; }
-  .cform .submit, .ready .row .btn { width: 100%; }
+  .cform .submit { width: 100%; }
 }

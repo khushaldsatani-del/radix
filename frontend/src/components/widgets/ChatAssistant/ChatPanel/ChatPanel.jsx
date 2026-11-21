@@ -26,7 +26,7 @@ export default function ChatPanel({ messages, faq, onAsk, onClose }) {
         <div><b>Radix Assistant</b><small>Team, Pitches And Updates</small></div>
         <button type="button" onClick={onClose} aria-label="Close chat">×</button>
       </div>
-      <div className="plog" ref={logRef} aria-live="polite" onClick={onLogClick}>
+      <div className="plog" ref={logRef} aria-live="polite" onClick={onLogClick} data-lenis-prevent>
         {messages.map((m) => <ChatMessage key={m.id} message={m} />)}
       </div>
       <div className="psugs">

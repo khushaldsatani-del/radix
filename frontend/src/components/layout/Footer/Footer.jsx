@@ -17,7 +17,7 @@ export default function Footer() {
           </div>
           <div>
             <h4>Contact</h4>
-            <ul><li><a href={`mailto:${CONTACT.business}`}>{CONTACT.business}</a></li><li>{CONTACT.location}</li></ul>
+            <ul><li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li><li>{CONTACT.location}</li></ul>
           </div>
           <div>
             <h4>Legal</h4>

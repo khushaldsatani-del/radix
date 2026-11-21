@@ -4,6 +4,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+/* Lenis does the smoothing; CSS smooth scrolling would fight it */
+html.lenis { scroll-behavior: auto; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--f-body); font-size: 16.5px; line-height: 1.6;

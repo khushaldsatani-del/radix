@@ -1,26 +1,32 @@
 import { useId, useState } from 'react';
 import Button from '@/components/common/Button/Button';
+import Select from '@/components/common/Select/Select';
 import { CONTACT, CONTACT_TOPICS } from '@/data/content';
+import { sendContactMessage } from '@/utils/sendContactMessage';
 import './ContactForm.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const EMPTY = { name: '', email: '', topic: CONTACT_TOPICS[0], message: '' };
+const EMPTY = { name: '', email: '', topic: CONTACT_TOPICS[0], message: '', honey: '' };
 
-/** Builds an email for the visitor's own mail app. Nothing is sent or stored. */
+/** Contact form that emails the message straight to the Radix team inbox. */
 export default function ContactForm() {
   const id = useId();
   const [form, setForm] = useState(EMPTY);
   const [errors, setErrors] = useState({});
-  const [ready, setReady] = useState(null);
-  const [copyLabel, setCopyLabel] = useState('Copy Text');
+  // 'idle' | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState('idle');
+  const [sentTo, setSentTo] = useState('');
+  const [errorDetail, setErrorDetail] = useState('');
 
   const set = (k) => (e) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
     if (errors[k]) setErrors((er) => ({ ...er, [k]: undefined }));
+    if (status === 'sent' || status === 'error') setStatus('idle');
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    if (status === 'sending') return;
     const er = {};
     if (!form.name.trim()) er.name = 'Please enter your name.';
     if (!form.email.trim()) er.email = 'Please enter your email.';
@@ -31,30 +37,30 @@ export default function ContactForm() {
       document.getElementById(`${id}-${Object.keys(er)[0]}`)?.focus();
       return;
     }
-    const subject = `[Radix website] ${form.topic}`;
-    const body = `${form.message.trim()}\n\n— ${form.name.trim()} (${form.email.trim()})`;
-    setReady({
-      preview: `To: ${CONTACT.business}\nSubject: ${subject}\n\n${body}`,
-      href: `mailto:${CONTACT.business}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
-    });
-    setCopyLabel('Copy Text');
-  };
 
-  const copy = async () => {
+    setStatus('sending');
     try {
-      await navigator.clipboard.writeText(ready.preview);
-      setCopyLabel('Copied');
-    } catch {
-      const pre = document.getElementById(`${id}-preview`);
-      const r = document.createRange(); r.selectNodeContents(pre);
-      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      setCopyLabel('Text Selected');
+      await sendContactMessage({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        topic: form.topic,
+        message: form.message.trim(),
+        honey: form.honey,
+      });
+      setSentTo(form.email.trim());
+      setForm(EMPTY);
+      setStatus('sent');
+    } catch (err) {
+      // the service's own reason (e.g. "This form needs Activation") helps while developing
+      console.warn('[contact form]', err.message);
+      setErrorDetail(import.meta.env.DEV ? err.message : '');
+      setStatus('error');
     }
   };
 
   const field = (key, label, input) => (
     <div className={`field${errors[key] ? ' invalid' : ''}`}>
-      <label htmlFor={`${id}-${key}`}>{label} *</label>
+      <label htmlFor={`${id}-${key}`} id={`${id}-${key}-label`}>{label} *</label>
       {input}
       {errors[key] && <span className="ferr" id={`${id}-${key}-err`}>{errors[key]}</span>}
     </div>
@@ -65,8 +71,10 @@ export default function ContactForm() {
     'aria-describedby': errors[key] ? `${id}-${key}-err` : undefined,
   });
 
+  const sending = status === 'sending';
+
   return (
-    <form className="cform" noValidate onSubmit={onSubmit}>
+    <form className="cform" noValidate onSubmit={onSubmit} aria-busy={sending}>
       <h3>Send Us A Message</h3>
       <p className="fnote">Fields marked * are required.</p>
       <div className="two">
@@ -74,27 +82,49 @@ export default function ContactForm() {
         {field('email', 'Your Email', <input {...a11y('email')} type="email" inputMode="email" autoComplete="email" value={form.email} onChange={set('email')} />)}
       </div>
       {field('topic', 'What Is It About?', (
-        <select {...a11y('topic')} value={form.topic} onChange={set('topic')}>
-          {CONTACT_TOPICS.map((t) => <option key={t}>{t}</option>)}
-        </select>
+        <Select
+          id={`${id}-topic`}
+          labelledBy={`${id}-topic-label`}
+          value={form.topic}
+          options={CONTACT_TOPICS}
+          onChange={(topic) => set('topic')({ target: { value: topic } })}
+        />
       ))}
       {field('message', 'Message', <textarea {...a11y('message')} value={form.message} onChange={set('message')} />)}
-      <Button type="submit" arrow className="submit">Prepare Email</Button>
+
+      {/* Spam trap: hidden from people, bots tend to fill it in */}
+      <div hidden>
+        <label htmlFor={`${id}-honey`}>Leave this empty</label>
+        <input id={`${id}-honey`} tabIndex={-1} autoComplete="off" value={form.honey} onChange={set('honey')} />
+      </div>
+
+      <Button type="submit" arrow={!sending} className="submit" disabled={sending}>
+        {sending ? 'Sending…' : 'Send Message'}
+      </Button>
+
+      <div className="flive" aria-live="polite">
+        {status === 'sent' && (
+          <div className="fstatus ok" role="status">
+            <b>Thanks, your message has been sent.</b>
+            <span>We'll reply to {sentTo} as soon as we can.</span>
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="fstatus err" role="alert">
+            <b>Sorry, your message could not be sent.</b>
+            <span>
+              Please try again in a moment, or email us directly at{' '}
+              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+            </span>
+            {errorDetail && <small className="fdev">Dev only: {errorDetail}</small>}
+          </div>
+        )}
+      </div>
+
       <p className="fnote">
-        Nothing is stored on this website. We prepare the email; you send it from your own email app. See our{' '}
+        Your message is delivered to our team inbox and used only to reply to you. See our{' '}
         <a href="#privacy">privacy policy</a>.
       </p>
-      {ready && (
-        <div className="ready" role="status">
-          <b>Your email is ready.</b>
-          <pre id={`${id}-preview`}>{ready.preview}</pre>
-          <div className="row">
-            <Button href={ready.href}>Open In Email App</Button>
-            <Button variant="ghost" onClick={copy}>{copyLabel}</Button>
-          </div>
-          <span className="fnote">If your email app doesn't open, copy the text and send it to {CONTACT.business}.</span>
-        </div>
-      )}
     </form>
   );
 }

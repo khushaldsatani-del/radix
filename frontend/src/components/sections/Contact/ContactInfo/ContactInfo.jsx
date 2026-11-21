@@ -26,8 +26,7 @@ export default function ContactInfo() {
         answer as a team.
       </p>
       <div className="cinfo">
-        <div><span className="k">Business Enquiries</span><a href={`mailto:${CONTACT.business}`}>{CONTACT.business}</a></div>
-        <div><span className="k">Contact &amp; Support</span><a href={`mailto:${CONTACT.support}`}>{CONTACT.support}</a></div>
+        <div><span className="k">Email</span><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></div>
         <div><span className="k">Location</span><span>{CONTACT.location}</span></div>
         <div className="socials">
           {SOCIALS.map((s) => (

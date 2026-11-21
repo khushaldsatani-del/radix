@@ -55,7 +55,7 @@ export default function TeamCard({ member, index }) {
             <span className="hint" aria-hidden="true">Tap to read more</span>
           </div>
         </div>
-        <div className="card back" aria-hidden="true">
+        <div className="card back" aria-hidden="true" data-lenis-prevent>
           {photoOk && <img className="bimg" src={member.photo} alt="" loading="lazy" />}
           <span className="num">{num} · Radix</span>
           <h3>{member.name}</h3>

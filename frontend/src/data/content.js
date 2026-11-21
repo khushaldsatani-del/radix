@@ -6,8 +6,8 @@ export const NAV_LINKS = [
 ];
 
 export const CONTACT = {
-  business: 'radix.team@gmail.com',
-  support: 'contact.radixit@gmail.com',
+  // the one email address shown on the site; contact-form messages are delivered here too
+  email: 'contact.radixit@gmail.com',
   location: 'Chemnitz, Germany',
 };
 
