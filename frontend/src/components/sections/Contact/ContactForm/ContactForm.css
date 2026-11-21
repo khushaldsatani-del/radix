@@ -22,7 +22,11 @@
 .field.invalid input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px #fff7f6 inset; }
 .field input:autofill { background: var(--bg-2); }
 .field.invalid input, .field.invalid textarea { border-color: #b4362b; background: #fff7f6; }
-.ferr { color: #b4362b; font-size: .8rem; }
+.ferr { color: #b4362b; font-size: .8rem; line-height: 1.4; }
+/* error text on the left, character counter on the right */
+.fmeta { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.fcount { flex: none; font-family: var(--f-mono); font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fcount.over { color: #b4362b; font-weight: 500; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .fnote { font-size: .8rem; color: var(--muted); }
 .cform .submit:disabled { opacity: .7; cursor: progress; }

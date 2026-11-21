@@ -47,6 +47,20 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 Production build: `npm run build` (output in `frontend/dist`), preview with `npm run preview`.
+Checks: `npm run lint` (ESLint) and `npm test` (Vitest unit tests for the contact form logic).
+
+## Contact Form Rules
+- **Validation** (`src/utils/validation.js`): name 2-60 letters; message 10-2000 characters; email must have a
+  proper format, at least one letter before the @ (`123@gmail.com` is rejected), a real domain ending from the
+  official IANA list (`1@gmail.ii` is rejected), correct big-provider domains (`gmail.co` suggests `gmail.com`),
+  Gmail's 6-30 character usernames, and no throwaway inboxes.
+- **Daily limit** (`src/utils/rateLimit.js`): 5 messages per email address per 24 hours. The site has no backend, so
+  this is counted in the visitor's browser (only a hash of the address is stored). Enforcing it across devices
+  would need a server with a database.
+- **Errors**: offline, timeout, blocked request, service busy/down, form not activated and daily limit each show
+  their own message, and the visitor's text stays in the form.
+- **Refresh the domain-ending list** (`src/data/tlds.js`) if a new ending is ever rejected: download
+  https://data.iana.org/TLD/tlds-alpha-by-domain.txt and replace the list in that file (lower case, `xn--` entries skipped).
 
 ## Editing Content
 All text lives in `frontend/src/data/` (`team.js`, `growth.js` with `GROWTH`/`MILESTONES`/`NEWS`, `content.js`, `assistant.jsx`).

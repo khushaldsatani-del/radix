@@ -8,4 +8,5 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, 'src') },
   },
   server: { port: 5173, open: false },
+  test: { environment: 'node', include: ['src/**/*.test.js'] },
 });
