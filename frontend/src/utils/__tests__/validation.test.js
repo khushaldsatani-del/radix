@@ -16,7 +16,45 @@ describe('validateEmail', () => {
     'priya@startup.in',
     'dev@my-site.app',
     'x@example.xyz',
+    // real providers that are one letter away from a popular one must not be flagged
+    'anna@mail.com',
+    'anna@email.com',
+    'anna@web.de',
+    'anna@gmx.de',
+    'anna@gmx.net',
+    'anna@me.com',
+    'anna@ymail.com',
+    'anna@live.com',
+    'anna@aol.com',
+    'anna@t-online.de',
+    'anna@yahoo.co.uk',
   ])('accepts %s', (email) => ok(validateEmail(email)));
+
+  it.each([
+    ['khushal.d.satani@gail.com', 'gmail.com'],
+    ['khushal.d.satani@gmal.com', 'gmail.com'],
+    ['khushal.d.satani@gmai.com', 'gmail.com'],
+    ['khushal.d.satani@gmaill.com', 'gmail.com'],
+    ['khushal.d.satani@gamil.com', 'gmail.com'],
+    ['khushal.d.satani@gmial.com', 'gmail.com'],
+    ['khushal.d.satani@gnail.com', 'gmail.com'],
+    ['khushal.d.satani@gmail.cm', 'gmail.com'],
+    ['khushal.d.satani@gmail.om', 'gmail.com'],
+    ['khushal.d.satani@gmaik.com', 'gmail.com'],
+    ['anna@yaho.com', 'yahoo.com'],
+    ['anna@yahooo.com', 'yahoo.com'],
+    ['anna@hotmal.com', 'hotmail.com'],
+    ['anna@hotmial.com', 'hotmail.com'],
+    ['anna@hotmail.de.com', null],
+    ['anna@outlok.com', 'outlook.com'],
+    ['anna@iclod.com', 'icloud.com'],
+    ['anna@wbe.de', 'web.de'],
+    ['anna@gmx.ed', 'gmx.de'],
+  ])('suggests a fix for %s', (email, fixed) => {
+    const err = validateEmail(email);
+    expect(err).not.toBe('');
+    if (fixed) expect(err).toContain(`@${fixed}?`);
+  });
 
   it.each([
     ['', /enter your email/],

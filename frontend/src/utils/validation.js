@@ -43,6 +43,44 @@ const LABEL_TYPOS = {
   outlok: 'outlook', outloo: 'outlook', outllok: 'outlook', otlook: 'outlook',
   iclod: 'icloud', icoud: 'icloud', iclud: 'icloud',
 };
+// Popular mail domains: an address one keystroke away from one of these is almost certainly a typo
+const POPULAR = [
+  ...Object.values(PROVIDERS).flat(),
+  'aol.com', 'gmx.de', 'gmx.net', 'gmx.com', 'web.de', 't-online.de', 'ymail.com', 'rediffmail.com',
+  'zoho.com', 'yandex.com', 'mail.ru', 'qq.com', 'tutanota.com', 'posteo.de', 'freenet.de',
+];
+// Real domains that happen to be one keystroke from a popular one (never flag these)
+const REAL = new Set([
+  ...POPULAR, 'mail.com', 'email.com', 'me.com', 'mac.com', 'msn.com', 'aol.de', 'gmx.at', 'gmx.ch', 'live.at',
+  'yahoo.co.jp', 'tuta.io', 'tuta.com', 'mail.de', 'online.de', 'arcor.de', 'hey.com', 'fastmail.com', 'pm.me',
+]);
+
+/** Edit distance where a swap of two neighbouring letters counts as one edit (optimal string alignment). */
+export function typoDistance(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[a.length][b.length];
+}
+
+/** Popular domain this one is a likely typo of, or null (gail.com -> gmail.com, hotmal.com -> hotmail.com). */
+export function suggestDomain(domain) {
+  if (REAL.has(domain)) return null;
+  const hit = POPULAR.find((p) => typoDistance(domain, p) === 1);
+  if (hit) return hit;
+  // common multi-letter slips of the provider name, keeping the visitor's ending if it's theirs
+  const [label, ...rest] = domain.split('.');
+  const fixed = LABEL_TYPOS[label];
+  if (fixed) return PROVIDERS[fixed].find((p) => p.endsWith(`.${rest.join('.')}`)) || PROVIDERS[fixed][0];
+  return null;
+}
+
 // Throwaway inboxes we can't reply to reliably
 const DISPOSABLE = new Set([
   'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', '10minutemail.com', 'tempmail.com', 'temp-mail.org',
@@ -75,15 +113,17 @@ export function validateEmail(raw) {
   if (labels.length < 2 || labels.some((l) => !DOMAIN_LABEL.test(l))) {
     return 'The part after the @ is not a valid domain. It should look like example.com.';
   }
+  // Typos of popular providers (gail.com, gmial.com, hotmal.com, gmail.con ...), checked before the ending so the hint is specific
+  const suggestion = suggestDomain(domain);
+  if (suggestion) return `Did you mean ${local}@${suggestion}? Please check the spelling after the @.`;
   const tld = labels[labels.length - 1];
   if (!/^[a-z]{2,}$/.test(tld) || !TLDS.has(tld)) {
     return `".${tld}" is not a real domain ending. Please check the part after the last dot (for example .com or .de).`;
   }
 
-  // Big providers: typo in the name, or a domain they don't use (gmail.co, gmail.ii ...)
-  const name = LABEL_TYPOS[labels[0]] || labels[0];
-  if (PROVIDERS[name] && !PROVIDERS[name].includes(domain)) {
-    return `Did you mean ${local}@${PROVIDERS[name][0]}?`;
+  // Big providers on a domain they don't use (gmail.co, gmail.de, outlook.xyz ...)
+  if (PROVIDERS[labels[0]] && !PROVIDERS[labels[0]].includes(domain)) {
+    return `Did you mean ${local}@${PROVIDERS[labels[0]][0]}? Please check the spelling after the @.`;
   }
   if (DISPOSABLE.has(domain)) return 'Please use a permanent email address, not a temporary one, so we can reply.';
 

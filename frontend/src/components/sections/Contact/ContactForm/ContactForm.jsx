@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Button from '@/components/common/Button/Button';
 import Select from '@/components/common/Select/Select';
 import { CONTACT, CONTACT_TOPICS } from '@/data/content';
@@ -10,6 +10,7 @@ import './ContactForm.css';
 const EMPTY = { name: '', email: '', topic: CONTACT_TOPICS[0], message: '', honey: '' };
 const VALIDATORS = { name: validateName, email: validateEmail, message: validateMessage };
 const FIELD_ORDER = ['name', 'email', 'message'];
+const SUCCESS_MS = 5000;
 
 const timeFmt = new Intl.DateTimeFormat('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
 
@@ -51,6 +52,19 @@ export default function ContactForm() {
   // 'idle' | 'sending' | 'sent' | 'error'
   const [status, setStatus] = useState('idle');
   const [result, setResult] = useState(null); // { sentTo, remaining } or { code, info, detail }
+
+  // The success message shows for 5 seconds, then the form returns to its fresh state
+  useEffect(() => {
+    if (status !== 'sent') return;
+    const t = setTimeout(() => {
+      setStatus('idle');
+      setResult(null);
+      setForm(EMPTY);
+      setErrors({});
+      touched.current = {};
+    }, SUCCESS_MS);
+    return () => clearTimeout(t);
+  }, [status]);
 
   const validateField = (k, value) => VALIDATORS[k]?.(value) || '';
 
@@ -185,6 +199,8 @@ export default function ContactForm() {
                 <> You can send {result.remaining} more {result.remaining === 1 ? 'message' : 'messages'} from this address today.</>
               )}
             </span>
+            {/* shrinks over 5 seconds, then the message goes away */}
+            <i className="ftimer" style={{ animationDuration: `${SUCCESS_MS}ms` }} aria-hidden="true" />
           </div>
         )}
         {err && (
