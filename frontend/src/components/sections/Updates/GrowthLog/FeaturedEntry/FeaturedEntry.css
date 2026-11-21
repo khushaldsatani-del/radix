@@ -17,9 +17,9 @@
 }
 .ge.feat .award { padding: 28px 26px; display: grid; gap: 12px; align-content: center; background: linear-gradient(160deg, #fff, var(--sand)); }
 .ge.feat .award .txt { display: grid; gap: 8px; min-width: 0; }
-.ge.feat .award .d { font-family: var(--f-mono); font-weight: 500; font-size: .95rem; color: var(--clay); }
-.ge.feat .award h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 800; line-height: 1.1; }
-.ge.feat .award p { color: var(--muted); font-size: .92rem; }
+.ge.feat .award .d { font-family: var(--f-mono); font-weight: 500; font-size: var(--fs-xs); color: var(--clay); }
+.ge.feat .award h3 { font-size: var(--fs-h4); font-weight: 800; line-height: 1.1; }
+.ge.feat .award p { color: var(--muted); font-size: var(--fs-sm); }
 
 .medal { position: relative; width: 104px; height: 104px; justify-self: start; }
 .medal svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 24s linear infinite; }

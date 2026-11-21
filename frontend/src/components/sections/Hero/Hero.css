@@ -7,15 +7,15 @@
 .kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--clay); margin-bottom: 24px; }
 .kicker::before { content: ""; width: 28px; height: 2px; background: var(--clay); }
 /* min size lowered from 3rem so "One Foundation." no longer gets clipped on small phones */
-.hero h1 { font-size: clamp(2.4rem, 5.6vw, 5rem); font-weight: 900; line-height: 1.08; letter-spacing: -.02em; }
+.hero h1 { font-size: var(--fs-hero); font-weight: 900; line-height: 1.08; letter-spacing: -.02em; }
 .hero h1 .line { display: block; overflow: hidden; padding: .02em 0 .1em; }
 .hero h1 .line > span { display: inline-block; animation: rise 1s var(--ease) both; }
 .hero h1 .line:nth-child(2) > span { animation-delay: .14s; }
 .hero h1 .thin { font-weight: 500; color: var(--green); font-size: .74em; }
-.lede { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.12rem); max-width: 44ch; margin-top: 26px; animation: fade 1s .45s both; }
+.lede { color: var(--muted); font-size: var(--fs-lead); max-width: 44ch; margin-top: 26px; animation: fade 1s .45s both; }
 .hero .row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; animation: fade 1s .6s both; }
 .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 34px; animation: fade 1s .75s both; }
-.meta span { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: #fff; }
+.meta span { font-family: var(--f-mono); font-size: var(--fs-2xs); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: #fff; }
 
 .specimen { position: relative; width: min(760px, 100%); aspect-ratio: 1; justify-self: center; }
 .specimen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -33,7 +33,7 @@
 }
 @media (max-width: 980px) {
   .hero .wrap { grid-template-columns: 1fr; }
-  .hero h1 { font-size: clamp(2.4rem, 10vw, 5rem); }
+  .hero h1 { font-size: clamp(2.5rem, 9vw, 3.75rem); }
   .hero h1 .thin { font-size: 1em; }
   .specimen { width: min(520px, 100%); }
 }

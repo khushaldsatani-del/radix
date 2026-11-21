@@ -20,7 +20,7 @@
 }
 .vnode {
   width: 76px; height: 76px; border-radius: 50%; border: 2px solid var(--green); background: #fff; display: grid; place-items: center;
-  font-family: var(--f-display); font-weight: 900; font-size: 1.9rem; color: var(--navy); position: relative; z-index: 1;
+  font-family: var(--f-display); font-weight: 900; font-size: 1.75rem; color: var(--navy); position: relative; z-index: 1;
   box-shadow: 0 0 0 8px var(--mint-2);
   transform: scale(clamp(0, (var(--sp) - .52 - var(--i) * .07) / .16, 1));
   transition: background .3s, color .3s;
@@ -32,8 +32,8 @@
 .vcol:hover .vnode { background: var(--green); color: #fff; }
 .vcol:nth-child(even) .vnode { border-color: var(--clay); box-shadow: 0 0 0 8px var(--sand); }
 .vcol:nth-child(even):hover .vnode { background: var(--clay); }
-.vcol h4 { font-family: var(--f-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); margin: 0 0 6px; letter-spacing: -.02em; }
-.vcol p { color: var(--muted); font-size: .94rem; max-width: 24ch; margin: 0 auto; }
+.vcol h4 { font-family: var(--f-display); font-size: var(--fs-h4); font-weight: 800; color: var(--navy); margin: 0 0 6px; letter-spacing: -.02em; }
+.vcol p { color: var(--muted); font-size: var(--fs-sm); max-width: 24ch; margin: 0 auto; }
 
 /* 5 columns get too narrow below ~1080px: switch to a vertical root list, each value grows as it scrolls in */
 @media (max-width: 1080px) {

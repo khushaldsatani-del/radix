@@ -18,7 +18,7 @@
 
 .member .body { padding: 18px 20px 20px; display: grid; gap: 6px; }
 .member .num { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
-.member h3 { font-size: 1.4rem; font-weight: 800; }
+.member h3 { font-size: var(--fs-h4); font-weight: 800; }
 .member .roles { display: flex; gap: 6px; flex-wrap: wrap; }
 .member .roles span { font-size: .8rem; padding: 3px 10px; border-radius: 999px; background: var(--sand); color: var(--soil); font-weight: 500; }
 .member .hint { font-family: var(--f-mono); font-size: .68rem; color: var(--muted); margin-top: 2px; display: none; }
@@ -33,16 +33,16 @@
 .member .back .num { color: #9fb3c2; }
 .member .back h3 { color: #fff; }
 .member .back .brole { align-self: flex-start; font-size: .8rem; padding: 3px 10px; border-radius: 999px; background: rgba(127, 224, 214, .16); color: #7fe0d6; font-weight: 500; }
-.member .back p { color: #dce5ea; font-size: .93rem; line-height: 1.55; margin: 6px 0 0; }
+.member .back p { color: #dce5ea; font-size: var(--fs-sm); line-height: 1.55; margin: 6px 0 0; }
 
 @media (max-width: 760px) {
   .member .card { border-radius: 18px; }
   .member .body { padding: 14px 14px 16px; }
-  .member h3 { font-size: 1.15rem; }
+  .member h3 { font-size: 1.05rem; }
   .member .roles span { font-size: .72rem; padding: 2px 8px; }
   .member .back { padding: 16px 14px; gap: 6px; }
   .member .back .bimg { width: 48px; height: 48px; }
   .member .back p { font-size: .84rem; line-height: 1.45; }
 }
-@media (max-width: 340px) { .member h3 { font-size: 1.3rem; } .member .back p { font-size: .93rem; } }
+@media (max-width: 340px) { .member h3 { font-size: var(--fs-h4); } .member .back p { font-size: .93rem; } }
 @media (prefers-reduced-motion: reduce) { .member .flip { transition: none; } }

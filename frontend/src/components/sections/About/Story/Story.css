@@ -9,8 +9,8 @@
 }
 .story > * { position: relative; min-width: 0; }
 .story .bigr { position: absolute; right: -30px; bottom: -90px; font-family: var(--f-display); font-weight: 900; font-size: clamp(14rem, 30vw, 24rem); line-height: 1; color: rgba(255, 255, 255, .06); z-index: -1; }
-.story .eyebrow { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; color: #7fe0d6; }
-.story h3 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); font-weight: 800; color: #fff; margin-top: 10px; }
+.story .eyebrow { font-family: var(--f-display); font-weight: 700; font-size: var(--fs-eyebrow); color: #7fe0d6; }
+.story h3 { font-size: var(--fs-h3); font-weight: 800; color: #fff; margin-top: 10px; }
 .story p { color: rgba(255, 255, 255, .8); margin-top: 14px; max-width: 52ch; }
 .story p b { color: #fff; }
 .counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -18,13 +18,13 @@
   border-radius: 20px; padding: 24px 14px; display: grid; gap: 6px; justify-items: center; align-content: center; text-align: center;
   aspect-ratio: 1 / 1; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .16);
 }
-.count .n { font-family: var(--f-display); font-weight: 900; font-size: clamp(2.2rem, 5vw, 3.4rem); color: #7fe0d6; line-height: 1; font-variant-numeric: tabular-nums; }
-.count .l { font-weight: 600; font-size: 1.02rem; color: rgba(255, 255, 255, .9); overflow-wrap: anywhere; line-height: 1.25; }
+.count .n { font-family: var(--f-display); font-weight: 900; font-size: clamp(2rem, 3.6vw, 2.75rem); color: #7fe0d6; line-height: 1; font-variant-numeric: tabular-nums; }
+.count .l { font-weight: 600; font-size: var(--fs-sm); color: rgba(255, 255, 255, .9); overflow-wrap: anywhere; line-height: 1.25; }
 @media (max-width: 900px) { .story { grid-template-columns: 1fr; } }
 @media (max-width: 520px) {
   .story { border-radius: 22px; }
   .counts { gap: 8px; }
   .count { padding: 12px 6px; border-radius: 16px; }
-  .count .n { font-size: 2rem; }
-  .count .l { font-size: .8rem; }
+  .count .n { font-size: 1.75rem; }
+  .count .l { font-size: var(--fs-xs); }
 }

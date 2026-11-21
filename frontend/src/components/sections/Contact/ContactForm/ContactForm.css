@@ -1,10 +1,10 @@
 .cform { background: #fff; color: var(--ink); border-radius: 24px; padding: clamp(20px, 3vw, 32px); display: grid; gap: 14px; }
-.cform h3 { font-size: 1.5rem; font-weight: 800; }
+.cform h3 { font-size: var(--fs-h4); font-weight: 800; }
 .cform .submit { justify-self: start; }
 /* align-content: start keeps label + input at the top when the neighbouring field shows an
    error message (the grid row grows and would otherwise stretch/shift this field) */
 .field { display: grid; gap: 6px; min-width: 0; align-content: start; }
-.field label { font-size: .86rem; font-weight: 600; }
+.field label { font-size: var(--fs-xs); font-weight: 600; }
 /* 16px inputs stop iOS Safari from zooming in on focus */
 .field input, .field select, .field textarea {
   font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-2);
@@ -28,7 +28,7 @@
 .fcount { flex: none; font-family: var(--f-mono); font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .fcount.over { color: #b4362b; font-weight: 500; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.fnote { font-size: .8rem; color: var(--muted); }
+.fnote { font-size: var(--fs-xs); color: var(--muted); }
 .cform .submit:disabled { opacity: .7; cursor: progress; }
 /* the live region stays in the DOM for screen readers; cancel the grid gap while it is empty */
 .cform .flive:empty { margin-top: -14px; }

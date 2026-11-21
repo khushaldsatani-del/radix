@@ -4,10 +4,10 @@
   transition: transform .4s var(--ease), border-color .3s, opacity .9s var(--ease);
 }
 .post:hover { transform: translateY(-4px); border-color: var(--mint); }
-.post .d { font-weight: 600; font-size: .98rem; color: var(--ink); }
+.post .d { font-weight: 600; font-size: var(--fs-xs); color: var(--ink); }
 .post .tag { justify-self: start; font-family: var(--f-mono); font-size: .68rem; padding: 3px 9px; border-radius: 999px; background: var(--sand); color: var(--soil); }
-.post h3 { font-size: 1.25rem; font-weight: 800; line-height: 1.15; }
-.post p { color: var(--muted); font-size: .94rem; }
+.post h3 { font-size: var(--fs-h4); font-weight: 800; line-height: 1.15; }
+.post p { color: var(--muted); font-size: var(--fs-sm); }
 @media (max-width: 1000px) and (min-width: 641px) {
   .news { grid-template-columns: 1fr 1fr; }
   .news > :last-child { grid-column: 1 / -1; }

@@ -8,7 +8,7 @@
 .ans .ic { width: 52px; height: 52px; border-radius: 16px; background: var(--mint-2); color: var(--green); display: grid; place-items: center; }
 .ans .ic svg { width: 26px; height: 26px; transition: transform .6s var(--ease); }
 .ans:hover .ic svg { transform: rotate(-10deg) scale(1.1); }
-.ans h3 { font-size: 1.5rem; font-weight: 700; }
+.ans h3 { font-size: var(--fs-h4); font-weight: 700; }
 .ans p { color: var(--muted); }
 .ans .bg { position: absolute; right: -10px; bottom: -30px; font-family: var(--f-display); font-weight: 900; font-size: 8rem; line-height: 1; color: var(--bg-2); z-index: 0; transition: color .4s; }
 .ans:hover .bg { color: var(--mint-2); }
